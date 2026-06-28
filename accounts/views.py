@@ -1,19 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 
 from students.models import Parent
-from .forms import LoginForm, ParentRegistrationForm
-from .models import User
+from .forms import LoginForm, RegistrationForm
 
 
 def role_based_dashboard(request):
     if not request.user.is_authenticated:
-        return redirect('login')
-
-    if not request.user.is_approved and not request.user.is_superuser:
-        messages.warning(request, "Your account is pending approval by admin.")
-        logout(request)
         return redirect('login')
 
     return render(request, 'dashboard.html')
@@ -21,20 +15,29 @@ def role_based_dashboard(request):
 
 def register(request):
     if request.method == 'POST':
-        form = ParentRegistrationForm(request.POST)
+        form = RegistrationForm(request.POST)
+
         if form.is_valid():
             user = form.save(commit=False)
-            user.role = 'parent'
-            user.is_approved = False
+            user.role = form.cleaned_data['account_type']
+            user.is_approved = True
             user.save()
+
+            if user.role == 'parent':
+                Parent.objects.get_or_create(
+                    user=user,
+                    defaults={
+                        'phone': user.phone or '',
+                    }
+                )
 
             messages.success(
                 request,
-                "Registration submitted successfully. Please wait for admin approval."
+                "Registration completed successfully. You can now log in."
             )
             return redirect('login')
     else:
-        form = ParentRegistrationForm()
+        form = RegistrationForm()
 
     return render(request, 'accounts/register.html', {'form': form})
 
@@ -42,6 +45,7 @@ def register(request):
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
+
         if form.is_valid():
             user = authenticate(
                 request,
@@ -51,8 +55,6 @@ def user_login(request):
 
             if user is None:
                 messages.error(request, "Invalid username or password.")
-            elif not user.is_approved and not user.is_superuser:
-                messages.error(request, "Your account is pending admin approval.")
             else:
                 login(request, user)
                 return redirect('dashboard')
@@ -72,13 +74,10 @@ def pending_parent_list(request):
         return redirect('login')
 
     if request.user.role != 'admin' and not request.user.is_superuser:
-        messages.error(request, "You do not have permission to view pending registrations.")
+        messages.error(request, "You do not have permission to view registrations.")
         return redirect('dashboard')
 
-    pending_parents = User.objects.filter(
-        role='parent',
-        is_approved=False
-    ).order_by('date_joined')
+    pending_parents = []
 
     return render(
         request,
@@ -90,62 +89,10 @@ def pending_parent_list(request):
 
 
 def approve_parent(request, user_id):
-    if not request.user.is_authenticated:
-        return redirect('login')
-
-    if request.user.role != 'admin' and not request.user.is_superuser:
-        messages.error(request, "You do not have permission to approve parents.")
-        return redirect('dashboard')
-
-    parent_user = get_object_or_404(
-        User,
-        id=user_id,
-        role='parent'
-    )
-
-    parent_user.is_approved = True
-    parent_user.save()
-
-    Parent.objects.get_or_create(user=parent_user)
-
-    messages.success(
-        request,
-        f"{parent_user.get_full_name() or parent_user.username} has been approved."
-    )
-
+    messages.info(request, "Approval is no longer required. Users can log in after registration.")
     return redirect('pending_parent_list')
 
 
 def reject_parent(request, user_id):
-    if not request.user.is_authenticated:
-        return redirect('login')
-
-    if request.user.role != 'admin' and not request.user.is_superuser:
-        messages.error(request, "You do not have permission to reject parents.")
-        return redirect('dashboard')
-
-    parent_user = get_object_or_404(
-        User,
-        id=user_id,
-        role='parent',
-        is_approved=False
-    )
-
-    if request.method == 'POST':
-        display_name = parent_user.get_full_name() or parent_user.username
-        parent_user.delete()
-
-        messages.success(
-            request,
-            f"{display_name} registration was rejected and removed."
-        )
-
-        return redirect('pending_parent_list')
-
-    return render(
-        request,
-        'accounts/reject_parent_confirm.html',
-        {
-            'parent_user': parent_user,
-        }
-    )
+    messages.info(request, "Approval is no longer required. Users can log in after registration.")
+    return redirect('pending_parent_list')
