@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Reject Parent Registration{% endblock %}
+
+{% block content %}
+<h1>Reject Parent Registration</h1>
+
+<div class="alert alert-warning">
+    Are you sure you want to reject and remove this parent registration?
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <p><strong>Name:</strong> {{ parent_user.get_full_name|default:"-" }}</p>
+        <p><strong>Username:</strong> {{ parent_user.username }}</p>
+        <p><strong>Email:</strong> {{ parent_user.email|default:"-" }}</p>
+    </div>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, Reject</button>
+    <a href="{% url 'pending_parent_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

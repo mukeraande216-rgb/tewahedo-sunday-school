@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Announcements{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Announcements</h1>
+
+    {% if user.role == 'admin' or user.role == 'teacher' %}
+        <a href="{% url 'announcement_create' %}" class="btn btn-primary">Create Announcement</a>
+    {% endif %}
+</div>
+
+{% for announcement in announcements %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+                <h4>{{ announcement.title }}</h4>
+
+                {% if user.role == 'admin' %}
+                    <a href="{% url 'announcement_edit' announcement.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                {% elif user.role == 'teacher' and announcement.class_level %}
+                    <a href="{% url 'announcement_edit' announcement.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                {% endif %}
+            </div>
+
+            <p>{{ announcement.content }}</p>
+
+            <p class="text-muted">
+                <strong>Target:</strong> {{ announcement.get_target_display }}
+                |
+                <strong>Class:</strong> {{ announcement.class_level|default:"All" }}
+                |
+                <strong>By:</strong> {{ announcement.created_by }}
+                |
+                <strong>Date:</strong> {{ announcement.created_at }}
+            </p>
+
+            {% if announcement.youtube_link %}
+                <p>
+                    <strong>YouTube:</strong>
+                    <a href="{{ announcement.youtube_link }}" target="_blank">Open Video</a>
+                </p>
+            {% endif %}
+
+            {% if announcement.image %}
+                <p>
+                    <strong>Image:</strong><br>
+                    <img src="{{ announcement.image.url }}" class="img-fluid rounded" style="max-width: 400px;">
+                </p>
+            {% endif %}
+
+            {% if announcement.attachment %}
+                <p>
+                    <strong>Attachment:</strong>
+                    <a href="{{ announcement.attachment.url }}" target="_blank">
+                        Open {{ announcement.attachment.name|cut:"announcements/files/" }}
+                    </a>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+{% empty %}
+    <p>No announcements yet.</p>
+{% endfor %}
+{% endblock %}

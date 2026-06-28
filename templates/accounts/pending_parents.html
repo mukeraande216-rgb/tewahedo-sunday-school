@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Pending Parent Registrations{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Pending Parent Registrations</h1>
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Date Registered</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for parent_user in pending_parents %}
+            <tr>
+                <td>{{ parent_user.get_full_name|default:"-" }}</td>
+                <td>{{ parent_user.username }}</td>
+                <td>{{ parent_user.email|default:"-" }}</td>
+                <td>{{ parent_user.date_joined }}</td>
+                <td>
+                    <a href="{% url 'approve_parent' parent_user.id %}" class="btn btn-sm btn-success">
+                        Approve
+                    </a>
+
+                    <a href="{% url 'reject_parent' parent_user.id %}" class="btn btn-sm btn-danger">
+                        Reject
+                    </a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5">No pending parent registrations.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Submit Homework{% endblock %}
+
+{% block content %}
+<h1>Submit Homework</h1>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h5>{{ assignment.title }}</h5>
+        <p>{{ assignment.description }}</p>
+        <p><strong>Due:</strong> {{ assignment.due_date }}</p>
+    </div>
+</div>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% if available_students.count > 1 %}
+        <div class="mb-3">
+            <label class="form-label">Select Student</label>
+            <select name="student" class="form-select" required>
+                <option value="">Choose student</option>
+                {% for student in available_students %}
+                    <option value="{{ student.id }}" {% if selected_student and selected_student.id == student.id %}selected{% endif %}>
+                        {{ student.full_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+    {% elif selected_student %}
+        <input type="hidden" name="student" value="{{ selected_student.id }}">
+        <p><strong>Student:</strong> {{ selected_student.full_name }}</p>
+    {% endif %}
+
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-success">Submit Homework</button>
+    <a href="{% url 'assignment_detail' assignment.id %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

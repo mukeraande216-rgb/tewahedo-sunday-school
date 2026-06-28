@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Progress Reports{% endblock %}
+{% block content %}
+<h1>Progress Reports</h1>
+<table class="table table-striped">
+    <thead><tr><th>Student</th><th>Period</th><th>Attendance %</th><th>Homework</th><th>Participation</th><th>Generated</th></tr></thead>
+    <tbody>
+    {% for report in reports %}
+        <tr><td>{{ report.student }}</td><td>{{ report.period }}</td><td>{{ report.attendance_rate }}</td><td>{{ report.homework_completion }}</td><td>{{ report.participation }}</td><td>{{ report.generated_at }}</td></tr>
+    {% empty %}
+        <tr><td colspan="6">No progress reports yet.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

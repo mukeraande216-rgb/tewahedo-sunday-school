@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Review Submission{% endblock %}
+
+{% block content %}
+<h1>Review Submission</h1>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <p><strong>Homework:</strong> {{ assignment.title }}</p>
+        <p><strong>Student:</strong> {{ submission.student }}</p>
+        <p><strong>Submitted At:</strong> {{ submission.submitted_at|default:"-" }}</p>
+        <p><strong>Response:</strong></p>
+        <p>{{ submission.response_text|default:"No text response." }}</p>
+
+        {% if submission.file %}
+            <p><strong>File:</strong> <a href="{{ submission.file.url }}" target="_blank">Open File</a></p>
+        {% endif %}
+    </div>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-success">Save Review</button>
+    <a href="{% url 'assignment_submissions' assignment.id %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

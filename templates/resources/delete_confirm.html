@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Resource{% endblock %}
+
+{% block content %}
+<h1>Delete Resource</h1>
+
+<div class="alert alert-warning">
+    Are you sure you want to delete this resource?
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h4>{{ resource.title }}</h4>
+
+        {% if resource.description %}
+            <p>{{ resource.description }}</p>
+        {% endif %}
+
+        <p>
+            <strong>Class:</strong> {{ resource.class_level|default:"All Classes" }}
+        </p>
+
+        {% if resource.file %}
+            <p>
+                <strong>File:</strong>
+                {{ resource.file.name|cut:"resources/files/" }}
+            </p>
+        {% endif %}
+
+        {% if resource.youtube_link %}
+            <p>
+                <strong>YouTube:</strong>
+                {{ resource.youtube_link }}
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a href="{% url 'resource_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

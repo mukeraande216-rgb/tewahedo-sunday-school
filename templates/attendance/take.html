@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Take Attendance{% endblock %}
+
+{% block content %}
+<h1>Take Attendance</h1>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-5">
+                <label class="form-label">Class</label>
+                <select name="class_level" class="form-select" required>
+                    <option value="">Choose class</option>
+                    {% for class_level in class_levels %}
+                        <option value="{{ class_level.id }}" {% if selected_class_id|stringformat:"s" == class_level.id|stringformat:"s" %}selected{% endif %}>
+                            {{ class_level.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Session Date</label>
+                <input type="date" name="session_date" class="form-control" value="{{ session_date }}" required>
+            </div>
+
+            <div class="col-md-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-secondary w-100">Load Students</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if selected_class %}
+    <h3>{{ selected_class.name }} - {{ session_date }}</h3>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="class_level" value="{{ selected_class.id }}">
+        <input type="hidden" name="session_date" value="{{ session_date }}">
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Status</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                    <tr>
+                        <td>{{ student.full_name }}</td>
+                        <td>
+                            <select name="status_{{ student.id }}" class="form-select" required>
+                                {% for value, label in status_choices %}
+                                    <option value="{{ value }}">{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" name="notes_{{ student.id }}" class="form-control" placeholder="Optional note">
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">No students enrolled in this class.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if students %}
+            <button type="submit" class="btn btn-success">Save Attendance</button>
+        {% endif %}
+
+        <a href="{% url 'attendance_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endif %}
+{% endblock %}

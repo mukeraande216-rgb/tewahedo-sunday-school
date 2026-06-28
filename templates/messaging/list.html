@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Messages{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Messages</h1>
+
+    {% if user.role == 'admin' or user.role == 'teacher' or user.role == 'parent' %}
+        <a href="{% url 'message_create' %}" class="btn btn-primary">New Message</a>
+    {% endif %}
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Parent</th>
+            <th>Teacher</th>
+            <th>Status</th>
+            <th>Updated</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for thread in threads %}
+            <tr>
+                <td>
+                    <a href="{% url 'message_detail' thread.id %}">
+                        {{ thread.subject }}
+                    </a>
+                </td>
+                <td>{{ thread.parent }}</td>
+                <td>{{ thread.teacher }}</td>
+                <td>
+                    {% if thread.is_closed %}
+                        Closed
+                    {% else %}
+                        Open
+                    {% endif %}
+                </td>
+                <td>{{ thread.updated_at }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5">No messages yet.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

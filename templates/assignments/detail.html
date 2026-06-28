@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Homework Detail{% endblock %}
+
+{% block content %}
+<h1>{{ assignment.title }}</h1>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <p><strong>Class:</strong> {{ assignment.class_level }}</p>
+        <p><strong>Teacher:</strong> {{ assignment.teacher }}</p>
+        <p><strong>Due Date:</strong> {{ assignment.due_date }}</p>
+        <p><strong>Description:</strong></p>
+        <p>{{ assignment.description }}</p>
+
+        {% if assignment.youtube_link %}
+            <p><strong>YouTube:</strong> <a href="{{ assignment.youtube_link }}" target="_blank">Open Video</a></p>
+        {% endif %}
+
+        {% if assignment.attachment %}
+            <p><strong>Attachment:</strong> <a href="{{ assignment.attachment.url }}" target="_blank">Download</a></p>
+        {% endif %}
+    </div>
+</div>
+
+{% if user.role == 'parent' or user.role == 'student' %}
+    <a href="{% url 'assignment_submit' assignment.id %}" class="btn btn-success">Submit Homework</a>
+{% endif %}
+
+{% if user.role == 'admin' or user.role == 'teacher' %}
+    <a href="{% url 'assignment_submissions' assignment.id %}" class="btn btn-primary">View Submissions</a>
+{% endif %}
+
+<a href="{% url 'assignment_list' %}" class="btn btn-secondary">Back</a>
+
+<hr>
+
+<h3>Your Submissions</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Status</th>
+            <th>Submitted At</th>
+            <th>Feedback</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for submission in submissions %}
+            <tr>
+                <td>{{ submission.student }}</td>
+                <td>{{ submission.get_status_display }}</td>
+                <td>{{ submission.submitted_at|default:"-" }}</td>
+                <td>{{ submission.feedback|default:"-" }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="4">No submission yet.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

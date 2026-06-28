@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}New Message{% endblock %}
+
+{% block content %}
+<h1>New Message</h1>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+
+            {% if user.role == 'admin' or user.role == 'teacher' %}
+                <div class="mb-3">
+                    <label class="form-label">Parent</label>
+                    <select name="parent" class="form-select" required>
+                        <option value="">Choose parent</option>
+                        {% for parent_user in parent_users %}
+                            <option value="{{ parent_user.id }}">{{ parent_user }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+
+            {{ form.as_p }}
+
+            <button type="submit" class="btn btn-success">Send Message</button>
+            <a href="{% url 'message_list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Message Detail{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>{{ thread.subject }}</h1>
+
+    {% if not thread.is_closed %}
+        {% if user.role == 'admin' or user.id == thread.teacher_id %}
+            <a href="{% url 'message_close' thread.id %}" class="btn btn-outline-danger">Close Thread</a>
+        {% endif %}
+    {% endif %}
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <p><strong>Parent:</strong> {{ thread.parent }}</p>
+        <p><strong>Teacher:</strong> {{ thread.teacher }}</p>
+        <p>
+            <strong>Status:</strong>
+            {% if thread.is_closed %}
+                Closed
+            {% else %}
+                Open
+            {% endif %}
+        </p>
+    </div>
+</div>
+
+<h3>Conversation</h3>
+
+{% for reply in replies %}
+    <div class="card mb-2">
+        <div class="card-body">
+            <p class="text-muted">
+                <strong>{{ reply.sender }}</strong>
+                |
+                {{ reply.created_at }}
+            </p>
+
+            <p>{{ reply.body }}</p>
+
+            {% if reply.attachment %}
+                <p>
+                    <strong>Attachment:</strong>
+                    <a href="{{ reply.attachment.url }}" target="_blank">Open Attachment</a>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+{% empty %}
+    <p>No replies yet.</p>
+{% endfor %}
+
+{% if not thread.is_closed %}
+    <hr>
+    <h3>Reply</h3>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-success">Send Reply</button>
+        <a href="{% url 'message_list' %}" class="btn btn-secondary">Back</a>
+    </form>
+{% else %}
+    <a href="{% url 'message_list' %}" class="btn btn-secondary">Back</a>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<h1>Admin Dashboard</h1>
+<p class="lead">Manage Sunday School registrations, classes, content, attendance, and reports.</p>
+<div class="row">
+    <div class="col-md-3"><div class="card text-center"><div class="card-body"><h5>Students</h5><p class="display-6">{{ student_count }}</p></div></div></div>
+    <div class="col-md-3"><div class="card text-center"><div class="card-body"><h5>Classes</h5><p class="display-6">{{ class_count }}</p></div></div></div>
+    <div class="col-md-3"><div class="card text-center"><div class="card-body"><h5>Assignments</h5><p class="display-6">{{ assignment_count }}</p></div></div></div>
+    <div class="col-md-3"><div class="card text-center"><div class="card-body"><h5>Attendance</h5><p class="display-6">{{ attendance_count }}</p></div></div></div>
+</div>
+{% endblock %}

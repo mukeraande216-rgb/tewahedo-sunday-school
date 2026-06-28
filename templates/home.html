@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+
+{% block title %}Tewahedo Sunday School{% endblock %}
+
+{% block content %}
+<div class="text-center mb-4">
+    <h1>Tewahedo Sunday School</h1>
+    <p class="lead">Church Sunday School management system</p>
+
+    {% if user.is_authenticated %}
+        <p>
+            Welcome, <strong>{{ user }}</strong>
+            {% if user.role %}
+                | Role: <strong>{{ user.get_role_display }}</strong>
+            {% endif %}
+        </p>
+    {% endif %}
+</div>
+
+{% if user.is_authenticated %}
+
+    <div class="row g-3">
+
+        {% if user.role == 'admin' %}
+            <div class="col-md-4">
+                <a href="{% url 'student_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Students
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'assignment_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Assignments / Homework
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'attendance_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Attendance
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'announcement_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Announcements
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'resource_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Resources / Lessons
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'message_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Messages
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'reports_dashboard' %}" class="btn btn-outline-primary w-100 p-3">
+                    Reports / Progress
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="/admin/" class="btn btn-outline-dark w-100 p-3">
+                    Admin Panel
+                </a>
+            </div>
+        {% endif %}
+
+
+        {% if user.role == 'teacher' %}
+            <div class="col-md-4">
+                <a href="{% url 'student_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    My Students
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'assignment_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Homework
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'attendance_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Attendance
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'announcement_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Announcements
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'resource_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Lesson Resources
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'message_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Parent Messages
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'reports_dashboard' %}" class="btn btn-outline-primary w-100 p-3">
+                    Class Progress
+                </a>
+            </div>
+        {% endif %}
+
+
+        {% if user.role == 'parent' %}
+            <div class="col-md-4">
+                <a href="{% url 'student_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    My Children
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'assignment_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Homework
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'attendance_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Attendance
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'announcement_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Announcements
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'resource_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Lesson Resources
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'message_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Message Teacher
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'reports_dashboard' %}" class="btn btn-outline-primary w-100 p-3">
+                    Child Progress
+                </a>
+            </div>
+        {% endif %}
+
+
+        {% if user.role == 'student' %}
+            <div class="col-md-4">
+                <a href="{% url 'assignment_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    My Homework
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'attendance_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    My Attendance
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'announcement_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Announcements
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'resource_list' %}" class="btn btn-outline-primary w-100 p-3">
+                    Lesson Resources
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'reports_dashboard' %}" class="btn btn-outline-primary w-100 p-3">
+                    My Progress
+                </a>
+            </div>
+        {% endif %}
+
+    </div>
+
+{% else %}
+
+    <div class="text-center">
+        <p>Please log in to access the Sunday School system.</p>
+        <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+    </div>
+
+{% endif %}
+{% endblock %}

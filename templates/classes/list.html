@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Classes{% endblock %}
+{% block content %}
+<h1>Class Levels</h1>
+<table class="table table-striped">
+    <thead><tr><th>Order</th><th>Name</th><th>Description</th><th>Active</th></tr></thead>
+    <tbody>
+    {% for class_level in class_levels %}
+        <tr><td>{{ class_level.order }}</td><td>{{ class_level.name }}</td><td>{{ class_level.description }}</td><td>{{ class_level.is_active }}</td></tr>
+    {% empty %}
+        <tr><td colspan="4">No class levels yet. Add Beginner, Intermediate, and Youth in the admin panel.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

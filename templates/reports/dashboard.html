@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Progress Reports{% endblock %}
+
+{% block content %}
+<h1>Progress Reports</h1>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Students</h5>
+                <h3>{{ summary.student_count }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Homework Submitted</h5>
+                <h3>{{ summary.total_submitted }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Missing Homework</h5>
+                <h3>{{ summary.total_missing }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Present Records</h5>
+                <h3>{{ summary.total_present }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Homework</th>
+            <th>Submitted</th>
+            <th>Missing</th>
+            <th>Homework %</th>
+            <th>Present</th>
+            <th>Absent</th>
+            <th>Late</th>
+            <th>Excused</th>
+            <th>Attendance %</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in report_rows %}
+            <tr>
+                <td>{{ row.student.full_name }}</td>
+                <td>{{ row.total_assignments }}</td>
+                <td>{{ row.submitted_count }}</td>
+                <td>{{ row.missing_homework }}</td>
+                <td>{{ row.homework_percent }}%</td>
+                <td>{{ row.present_count }}</td>
+                <td>{{ row.absent_count }}</td>
+                <td>{{ row.late_count }}</td>
+                <td>{{ row.excused_count }}</td>
+                <td>{{ row.attendance_percent }}%</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="10">No report data available yet.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
