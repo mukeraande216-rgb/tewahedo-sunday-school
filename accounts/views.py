@@ -165,17 +165,26 @@ def test_email(request):
         messages.error(request, "Your admin user does not have an email address.")
         return redirect('dashboard')
 
-    send_mail(
-        subject='Tewahedo Sunday School Email Test',
-        message='This is a test email sent from the live Django app using Zoho SMTP.',
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=[request.user.email],
-        fail_silently=False,
-    )
+    try:
+        send_mail(
+            subject='Tewahedo Sunday School Email Test',
+            message='This is a test email sent from the live Django app using Zoho SMTP.',
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[request.user.email],
+            fail_silently=False,
+        )
 
-    messages.success(
-        request,
-        f"Test email sent to {request.user.email}."
-    )
+        messages.success(
+            request,
+            f"Test email sent to {request.user.email}."
+        )
+
+    except Exception as error:
+        print(f"EMAIL TEST ERROR: {type(error).__name__}: {error}")
+
+        messages.error(
+            request,
+            f"Email test failed: {type(error).__name__}: {error}"
+        )
 
     return redirect('dashboard')
