@@ -8,7 +8,6 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('logout/', views.user_logout, name='logout'),
 
-    path('test-email/', views.test_email, name='test_email'),
 
     path('pending-parents/', views.pending_parent_list, name='pending_parent_list'),
     path('pending-parents/<int:user_id>/approve/', views.approve_parent, name='approve_parent'),

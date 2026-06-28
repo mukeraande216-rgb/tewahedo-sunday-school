@@ -1,7 +1,5 @@
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 
 from students.models import Parent
@@ -151,40 +149,3 @@ def reject_parent(request, user_id):
             'parent_user': parent_user,
         }
     )
-
-
-def test_email(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-
-    if request.user.role != 'admin' and not request.user.is_superuser:
-        messages.error(request, "You do not have permission to send a test email.")
-        return redirect('dashboard')
-
-    if not request.user.email:
-        messages.error(request, "Your admin user does not have an email address.")
-        return redirect('dashboard')
-
-    try:
-        send_mail(
-            subject='Tewahedo Sunday School Email Test',
-            message='This is a test email sent from the live Django app using Zoho SMTP.',
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[request.user.email],
-            fail_silently=False,
-        )
-
-        messages.success(
-            request,
-            f"Test email sent to {request.user.email}."
-        )
-
-    except Exception as error:
-        print(f"EMAIL TEST ERROR: {type(error).__name__}: {error}")
-
-        messages.error(
-            request,
-            f"Email test failed: {type(error).__name__}: {error}"
-        )
-
-    return redirect('dashboard')
