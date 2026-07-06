@@ -19,15 +19,34 @@ class Parent(models.Model):
 
 
 class Student(models.Model):
-    GENDER_CHOICES = [('M', 'Male'), ('F', 'Female')]
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='student_profile')
-    parent = models.ForeignKey(Parent, on_delete=models.CASCADE, related_name='children')
+    GENDER_CHOICES = [
+        ('', 'Not specified'),
+        ('M', 'Male'),
+        ('F', 'Female'),
+    ]
+
+    user = models.OneToOneField(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='student_profile'
+    )
+
+    parent = models.ForeignKey(
+        Parent,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='children'
+    )
+
     full_name = models.CharField(max_length=200)
-    date_of_birth = models.DateField()
-    gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
+    date_of_birth = models.DateField(null=True, blank=True)
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, blank=True)
     allergies_notes = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
-    registration_approved = models.BooleanField(default=False)
+    registration_approved = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

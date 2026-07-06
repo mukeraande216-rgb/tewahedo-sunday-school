@@ -62,6 +62,7 @@
                     {% endif %}
 
                     {% if user.role == 'student' %}
+			<a class="nav-link" href="{% url 'student_enroll_class' %}">Enroll</a>
                         <a class="nav-link" href="{% url 'assignment_list' %}">Homework</a>
                         <a class="nav-link" href="{% url 'attendance_list' %}">Attendance</a>
                         <a class="nav-link" href="{% url 'announcement_list' %}">Announcements</a>

@@ -1,7 +1,9 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from classes.models import ClassEnrollment
+from .forms import StudentClassEnrollmentForm
 from .models import Parent, Student
 
 
@@ -58,3 +60,64 @@ def student_list(request):
         students = Student.objects.none()
 
     return render(request, 'students/list.html', {'students': students})
+
+
+@login_required
+def student_enroll_class(request):
+    if request.user.role != 'student':
+        messages.error(request, "Only students can enroll in a class from this page.")
+        return redirect('dashboard')
+
+    student, created = Student.objects.get_or_create(
+        user=request.user,
+        defaults={
+            'full_name': request.user.get_full_name() or request.user.username,
+            'is_active': True,
+            'registration_approved': True,
+        }
+    )
+
+    if request.method == 'POST':
+        form = StudentClassEnrollmentForm(request.POST)
+
+        if form.is_valid():
+            class_level = form.cleaned_data['class_level']
+
+            enrollment, created = ClassEnrollment.objects.get_or_create(
+                student=student,
+                class_level=class_level,
+                defaults={
+                    'is_active': True,
+                }
+            )
+
+            if not created:
+                enrollment.is_active = True
+                enrollment.end_date = None
+                enrollment.save()
+
+            messages.success(
+                request,
+                f"You are enrolled in {class_level.name}."
+            )
+
+            return redirect('student_list')
+    else:
+        form = StudentClassEnrollmentForm()
+
+    current_enrollments = ClassEnrollment.objects.select_related(
+        'class_level'
+    ).filter(
+        student=student,
+        is_active=True
+    )
+
+    return render(
+        request,
+        'students/enroll_class.html',
+        {
+            'form': form,
+            'student': student,
+            'current_enrollments': current_enrollments,
+        }
+    )
