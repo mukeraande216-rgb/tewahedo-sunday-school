@@ -340,3 +340,93 @@ def review_submission(request, submission_id):
             'assignment': assignment,
         }
     )
+
+@login_required
+def assignment_edit(request, assignment_id):
+    assignment = get_object_or_404(Assignment, id=assignment_id)
+
+    if request.user.role not in ['admin', 'teacher']:
+        messages.error(request, "You do not have permission to edit homework.")
+        return redirect('assignment_list')
+
+    if request.user.role == 'teacher' and assignment.teacher != request.user:
+        messages.error(request, "You can only edit homework you created.")
+        return redirect('assignment_list')
+
+    if request.method == 'POST':
+        form = AssignmentForm(request.POST, request.FILES, instance=assignment)
+
+        if request.user.role == 'teacher':
+            allowed_class_ids = get_teacher_class_ids(request.user)
+            form.fields['class_level'].queryset = ClassLevel.objects.filter(id__in=allowed_class_ids)
+
+        if form.is_valid():
+            updated_assignment = form.save(commit=False)
+
+            if request.user.role == 'teacher':
+                updated_assignment.teacher = request.user
+
+            updated_assignment.save()
+            messages.success(request, "Homework updated successfully.")
+            return redirect('assignment_detail', assignment_id=assignment.id)
+    else:
+        form = AssignmentForm(instance=assignment)
+
+        if request.user.role == 'teacher':
+            allowed_class_ids = get_teacher_class_ids(request.user)
+            form.fields['class_level'].queryset = ClassLevel.objects.filter(id__in=allowed_class_ids)
+
+    return render(
+        request,
+        'assignments/create.html',
+        {
+            'form': form,
+            'page_title': 'Edit Homework',
+            'button_text': 'Update Homework',
+        }
+    )
+
+
+@login_required
+def assignment_delete(request, assignment_id):
+    assignment = get_object_or_404(Assignment, id=assignment_id)
+
+    if request.user.role not in ['admin', 'teacher']:
+        messages.error(request, "You do not have permission to delete homework.")
+        return redirect('assignment_list')
+
+    if request.user.role == 'teacher' and assignment.teacher != request.user:
+        messages.error(request, "You can only delete homework you created.")
+        return redirect('assignment_list')
+
+    if request.method == 'POST':
+        assignment.delete()
+        messages.success(request, "Homework deleted successfully.")
+        return redirect('assignment_list')
+
+    return render(
+        request,
+        'assignments/delete_confirm.html',
+        {
+            'assignment': assignment,
+        }
+    )
+
+
+@login_required
+def assignment_repost(request, assignment_id):
+    assignment = get_object_or_404(Assignment, id=assignment_id)
+
+    if request.user.role not in ['admin', 'teacher']:
+        messages.error(request, "You do not have permission to repost homework.")
+        return redirect('assignment_list')
+
+    if request.user.role == 'teacher' and assignment.teacher != request.user:
+        messages.error(request, "You can only repost homework you created.")
+        return redirect('assignment_list')
+
+    assignment.is_published = True
+    assignment.save()
+
+    messages.success(request, "Homework reposted successfully.")
+    return redirect('assignment_list')

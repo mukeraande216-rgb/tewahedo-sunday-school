@@ -255,3 +255,46 @@ def announcement_edit(request, announcement_id):
             'button_text': 'Update Announcement',
         }
     )
+@login_required
+def announcement_delete(request, announcement_id):
+    announcement = get_object_or_404(Announcement, id=announcement_id)
+
+    if request.user.role not in ['admin', 'teacher']:
+        messages.error(request, "You do not have permission to delete announcements.")
+        return redirect('announcement_list')
+
+    if not user_can_edit_announcement(request.user, announcement):
+        messages.error(request, "You can only delete announcements for your assigned class.")
+        return redirect('announcement_list')
+
+    if request.method == 'POST':
+        announcement.delete()
+        messages.success(request, "Announcement deleted successfully.")
+        return redirect('announcement_list')
+
+    return render(
+        request,
+        'announcements/delete_confirm.html',
+        {
+            'announcement': announcement,
+        }
+    )
+
+
+@login_required
+def announcement_repost(request, announcement_id):
+    announcement = get_object_or_404(Announcement, id=announcement_id)
+
+    if request.user.role not in ['admin', 'teacher']:
+        messages.error(request, "You do not have permission to repost announcements.")
+        return redirect('announcement_list')
+
+    if not user_can_edit_announcement(request.user, announcement):
+        messages.error(request, "You can only repost announcements for your assigned class.")
+        return redirect('announcement_list')
+
+    announcement.is_published = True
+    announcement.save()
+
+    messages.success(request, "Announcement reposted successfully.")
+    return redirect('announcement_list')

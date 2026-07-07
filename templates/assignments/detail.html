@@ -10,52 +10,108 @@
         <p><strong>Class:</strong> {{ assignment.class_level }}</p>
         <p><strong>Teacher:</strong> {{ assignment.teacher }}</p>
         <p><strong>Due Date:</strong> {{ assignment.due_date }}</p>
+
         <p><strong>Description:</strong></p>
         <p>{{ assignment.description }}</p>
 
         {% if assignment.youtube_link %}
-            <p><strong>YouTube:</strong> <a href="{{ assignment.youtube_link }}" target="_blank">Open Video</a></p>
+            <p>
+                <strong>YouTube:</strong>
+                <a href="{{ assignment.youtube_link }}" target="_blank" class="btn btn-sm btn-outline-danger">
+                    Open Video
+                </a>
+            </p>
         {% endif %}
 
         {% if assignment.attachment %}
-            <p><strong>Attachment:</strong> <a href="{{ assignment.attachment.url }}" target="_blank">Download</a></p>
+            <p>
+                <strong>Attachment:</strong>
+                <a href="{{ assignment.attachment.url }}" target="_blank" class="btn btn-sm btn-outline-success">
+                    Open / Download File
+                </a>
+            </p>
         {% endif %}
+
+        <p>
+            <strong>Status:</strong>
+            {% if assignment.is_published %}
+                <span class="badge bg-success">Published</span>
+            {% else %}
+                <span class="badge bg-warning text-dark">Draft</span>
+            {% endif %}
+        </p>
     </div>
 </div>
 
-{% if user.role == 'parent' or user.role == 'student' %}
-    <a href="{% url 'assignment_submit' assignment.id %}" class="btn btn-success">Submit Homework</a>
-{% endif %}
+<div class="mb-3">
+    {% if user.role == 'parent' or user.role == 'student' %}
+        <a href="{% url 'assignment_submit' assignment.id %}" class="btn btn-success">
+            Submit Homework
+        </a>
+    {% endif %}
 
-{% if user.role == 'admin' or user.role == 'teacher' %}
-    <a href="{% url 'assignment_submissions' assignment.id %}" class="btn btn-primary">View Submissions</a>
-{% endif %}
+    {% if user.role == 'admin' or user.role == 'teacher' %}
+        <a href="{% url 'assignment_submissions' assignment.id %}" class="btn btn-primary">
+            View Submissions
+        </a>
+    {% endif %}
 
-<a href="{% url 'assignment_list' %}" class="btn btn-secondary">Back</a>
+    {% if user.role == 'admin' or user == assignment.teacher %}
+        <a href="{% url 'assignment_edit' assignment.id %}" class="btn btn-warning">
+            Edit
+        </a>
+
+        {% if not assignment.is_published %}
+            <a href="{% url 'assignment_repost' assignment.id %}" class="btn btn-success">
+                Repost
+            </a>
+        {% endif %}
+
+        <a href="{% url 'assignment_delete' assignment.id %}" class="btn btn-danger">
+            Delete
+        </a>
+    {% endif %}
+
+    <a href="{% url 'assignment_list' %}" class="btn btn-secondary">
+        Back
+    </a>
+</div>
 
 <hr>
 
 <h3>Your Submissions</h3>
+
 <table class="table table-striped">
     <thead>
         <tr>
             <th>Student</th>
             <th>Status</th>
             <th>Submitted At</th>
+            <th>Answer File</th>
             <th>Feedback</th>
         </tr>
     </thead>
+
     <tbody>
         {% for submission in submissions %}
             <tr>
                 <td>{{ submission.student }}</td>
                 <td>{{ submission.get_status_display }}</td>
                 <td>{{ submission.submitted_at|default:"-" }}</td>
+                <td>
+                    {% if submission.file %}
+                        <a href="{{ submission.file.url }}" target="_blank" class="btn btn-sm btn-outline-success">
+                            Open Answer
+                        </a>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
                 <td>{{ submission.feedback|default:"-" }}</td>
             </tr>
         {% empty %}
             <tr>
-                <td colspan="4">No submission yet.</td>
+                <td colspan="5">No submission yet.</td>
             </tr>
         {% endfor %}
     </tbody>

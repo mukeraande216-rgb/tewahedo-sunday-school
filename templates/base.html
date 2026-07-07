@@ -4,48 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}St. Urael Sunday School{% endblock %}</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
-    <style>
-    .navbar {
-        background-color: #8B0000 !important;
-    }
+        .navbar {
+            background-color: #8B0000 !important;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
 
-    .navbar-brand {
-        font-size: 1.25rem;
-        font-weight: 700;
-    }
+        .navbar-brand {
+            color: #ffffff !important;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-right: 20px;
+            white-space: nowrap;
+        }
 
-    .navbar-nav .nav-link {
-        color: #ffffff !important;
-        font-weight: 700;
-        margin: 0 4px;
-        padding: 8px 14px !important;
-        border-radius: 6px;
-        border: 1px solid rgba(255, 255, 255, 0.45);
-        transition: all 0.2s ease-in-out;
-    }
+        .navbar-nav .nav-link {
+            color: #ffffff !important;
+            font-weight: 700;
+            margin: 3px 4px;
+            padding: 8px 14px !important;
+            border-radius: 6px;
+            background-color: #a30000;
+            border: 1px solid #ffffff;
+            opacity: 1 !important;
+            text-align: center;
+        }
 
-    .navbar-nav .nav-link:hover {
-        background-color: #ffffff;
-        color: #8B0000 !important;
-        border-color: #ffffff;
-    }
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link:focus {
+            background-color: #ffffff;
+            color: #8B0000 !important;
+            border-color: #ffffff;
+        }
 
-    .navbar-nav .nav-link.active {
-        background-color: #ffffff;
-        color: #8B0000 !important;
-    }
+        .navbar-dark .navbar-nav .nav-link {
+            color: #ffffff !important;
+        }
 
-    .card {
-        margin-bottom: 1rem;
-    }
+        .navbar-toggler {
+            border-color: #ffffff;
+        }
 
-    .badge-church {
-        background-color: #8B0000;
-    }
-</style>
+        .card {
+            margin-bottom: 1rem;
+        }
+
+        .badge-church {
+            background-color: #8B0000;
+        }
+
+        main {
+            padding-bottom: 40px;
+        }
+    </style>
 </head>
+
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
@@ -63,7 +80,7 @@
                     {% if user.role == 'admin' %}
                         <a class="nav-link" href="{% url 'student_list' %}">Students</a>
                         <a class="nav-link" href="/classes/">Classes</a>
-                        <a class="nav-link" href="{% url 'assignment_list' %}">Assignments</a>
+                        <a class="nav-link" href="{% url 'assignment_list' %}">Homework</a>
                         <a class="nav-link" href="{% url 'attendance_list' %}">Attendance</a>
                         <a class="nav-link" href="{% url 'announcement_list' %}">Announcements</a>
                         <a class="nav-link" href="{% url 'resource_list' %}">Resources</a>
@@ -97,7 +114,7 @@
                     {% endif %}
 
                     {% if user.role == 'student' %}
-			<a class="nav-link" href="{% url 'student_enroll_class' %}">Enroll</a>
+                        <a class="nav-link" href="{% url 'student_enroll_class' %}">Enroll</a>
                         <a class="nav-link" href="{% url 'assignment_list' %}">Homework</a>
                         <a class="nav-link" href="{% url 'attendance_list' %}">Attendance</a>
                         <a class="nav-link" href="{% url 'announcement_list' %}">Announcements</a>

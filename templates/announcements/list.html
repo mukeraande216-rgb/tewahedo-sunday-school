@@ -7,7 +7,9 @@
     <h1>Announcements</h1>
 
     {% if user.role == 'admin' or user.role == 'teacher' %}
-        <a href="{% url 'announcement_create' %}" class="btn btn-primary">Create Announcement</a>
+        <a href="{% url 'announcement_create' %}" class="btn btn-primary">
+            Create Announcement
+        </a>
     {% endif %}
 </div>
 
@@ -17,10 +19,22 @@
             <div class="d-flex justify-content-between align-items-start">
                 <h4>{{ announcement.title }}</h4>
 
-                {% if user.role == 'admin' %}
-                    <a href="{% url 'announcement_edit' announcement.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
-                {% elif user.role == 'teacher' and announcement.class_level %}
-                    <a href="{% url 'announcement_edit' announcement.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                {% if user.role == 'admin' or user == announcement.created_by %}
+                    <div>
+                        <a href="{% url 'announcement_edit' announcement.id %}" class="btn btn-sm btn-outline-primary">
+                            Edit
+                        </a>
+
+                        {% if not announcement.is_published %}
+                            <a href="{% url 'announcement_repost' announcement.id %}" class="btn btn-sm btn-outline-success">
+                                Repost
+                            </a>
+                        {% endif %}
+
+                        <a href="{% url 'announcement_delete' announcement.id %}" class="btn btn-sm btn-outline-danger">
+                            Delete
+                        </a>
+                    </div>
                 {% endif %}
             </div>
 
@@ -34,12 +48,21 @@
                 <strong>By:</strong> {{ announcement.created_by }}
                 |
                 <strong>Date:</strong> {{ announcement.created_at }}
+                |
+                <strong>Status:</strong>
+                {% if announcement.is_published %}
+                    Published
+                {% else %}
+                    Draft
+                {% endif %}
             </p>
 
             {% if announcement.youtube_link %}
                 <p>
                     <strong>YouTube:</strong>
-                    <a href="{{ announcement.youtube_link }}" target="_blank">Open Video</a>
+                    <a href="{{ announcement.youtube_link }}" target="_blank" class="btn btn-sm btn-outline-danger">
+                        Open Video
+                    </a>
                 </p>
             {% endif %}
 
@@ -53,7 +76,7 @@
             {% if announcement.attachment %}
                 <p>
                     <strong>Attachment:</strong>
-                    <a href="{{ announcement.attachment.url }}" target="_blank">
+                    <a href="{{ announcement.attachment.url }}" target="_blank" class="btn btn-sm btn-outline-success">
                         Open {{ announcement.attachment.name|cut:"announcements/files/" }}
                     </a>
                 </p>
