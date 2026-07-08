@@ -8,7 +8,7 @@ from .forms import LoginForm, RegistrationForm
 
 def role_based_dashboard(request):
     if not request.user.is_authenticated:
-        return redirect('login')
+        return render(request, 'public_home.html')
 
     return render(request, 'dashboard.html')
 
