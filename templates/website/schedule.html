@@ -1,0 +1,21 @@
+{% extends "website/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Worship Schedule" %} | {{ church_site.short_name }}{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">{% trans "Prayer and Worship" %}</span><h1>{% trans "Worship Schedule" %}</h1><p>{% trans "Current service times, prayer gatherings, Bible study, confession, and Sunday School." %}</p></div></section>
+<section class="section-space"><div class="container">
+<div class="row g-4">
+{% for service in services %}
+<div class="col-md-6 col-xl-4"><article class="content-card h-100">
+<p class="small text-uppercase fw-bold text-church">{{ service.get_day_of_week_display }}</p>
+<h2 class="h4">{{ service.name }}</h2>
+<p class="time-display">{{ service.start_time|time:"g:i A" }}{% if service.end_time %}–{{ service.end_time|time:"g:i A" }}{% endif %}</p>
+{% if service.location %}<p><i class="bi bi-geo-alt me-2"></i>{{ service.location }}</p>{% endif %}
+{% if service.note %}<p class="mb-0">{{ service.note }}</p>{% endif %}
+</article></div>
+{% empty %}
+<div class="col-12"><div class="alert alert-info">{% trans "The current schedule will be published soon. Please contact the church office." %}</div></div>
+{% endfor %}
+</div>
+</div></section>
+{% endblock %}

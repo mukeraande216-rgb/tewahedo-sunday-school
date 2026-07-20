@@ -1,0 +1,39 @@
+{% extends "website/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "About" %} | {{ church_site.short_name }}{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">{% trans "Who We Are" %}</span><h1>{% trans "About Our Church" %}</h1><p>{% trans "Our history, faith, clergy, mission, and service to the community." %}</p></div></section>
+<section class="section-space">
+<div class="container">
+    <div class="row g-5">
+        <div class="col-lg-7">
+            <h2>{% trans "Our Story" %}</h2>
+            <p>{% trans "Add the church’s approved founding history, milestones, patron saint history, relationship to the archdiocese, and service to the local community here." %}</p>
+            <h2 class="mt-5">{% trans "Our Faith" %}</h2>
+            <p>{% trans "Present the Ethiopian Orthodox Tewahedo faith clearly and respectfully, including worship, Holy Scripture, the sacraments, fasting, prayer, and Christian life." %}</p>
+        </div>
+        <div class="col-lg-5">
+            <aside class="content-card">
+                <h2 class="h4">{% trans "Our Mission" %}</h2>
+                <p>{% trans "To worship God, preserve and teach the Orthodox faith, nurture children and families, serve those in need, and build a faithful Christian community." %}</p>
+            </aside>
+        </div>
+    </div>
+    {% if clergy_members %}
+    <div class="section-heading mt-5"><span class="eyebrow text-church">{% trans "Leadership" %}</span><h2>{% trans "Clergy and Church Leadership" %}</h2></div>
+    <div class="row g-4">
+        {% for clergy in clergy_members %}
+        <div class="col-md-6 col-xl-4">
+            <article class="content-card h-100">
+                {% if clergy.photo_url %}<img class="profile-image mb-3" src="{{ clergy.photo_url }}" alt="{{ clergy.name }}">{% endif %}
+                <h3 class="h5 mb-1">{{ clergy.name }}</h3>
+                <p class="text-church fw-semibold">{{ clergy.title }}</p>
+                {% if clergy.bio %}<p>{{ clergy.bio }}</p>{% endif %}
+            </article>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+</section>
+{% endblock %}

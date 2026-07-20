@@ -1,0 +1,10 @@
+{% extends "website/base.html" %}
+{% load i18n %}
+{% block title %}{{ ministry.name }} | {{ church_site.short_name }}{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">{% trans "Ministry" %}</span><h1>{{ ministry.name }}</h1>{% if ministry.audience %}<p>{{ ministry.audience }}</p>{% endif %}</div></section>
+<section class="section-space"><div class="container"><div class="row g-5">
+<div class="col-lg-8"><h2>{% trans "About This Ministry" %}</h2><div class="lead">{{ ministry.summary|linebreaks }}</div></div>
+<div class="col-lg-4"><aside class="content-card"><h2 class="h5">{% trans "Get Connected" %}</h2>{% if ministry.contact_email %}<a class="btn btn-church w-100" href="mailto:{{ ministry.contact_email }}">{% trans "Contact Ministry" %}</a>{% else %}<a class="btn btn-church w-100" href="{% url 'website:contact' %}">{% trans "Contact the Church Office" %}</a>{% endif %}</aside></div>
+</div></div></section>
+{% endblock %}

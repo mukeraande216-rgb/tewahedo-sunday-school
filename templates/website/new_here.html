@@ -1,0 +1,19 @@
+{% extends "website/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "New Here" %} | {{ church_site.short_name }}{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">{% trans "Welcome" %}</span><h1>{% trans "Plan Your First Visit" %}</h1><p>{% trans "Everything you need to feel comfortable before visiting St. Urael Church." %}</p></div></section>
+<section class="section-space"><div class="container">
+<div class="row g-4 mb-5">
+<div class="col-md-6 col-xl-3"><article class="content-card h-100"><div class="icon-circle"><i class="bi bi-clock"></i></div><h2 class="h5">{% trans "When to Arrive" %}</h2><p>{% trans "Arrive early enough for parking, greeting, and preparation before worship begins." %}</p></article></div>
+<div class="col-md-6 col-xl-3"><article class="content-card h-100"><div class="icon-circle"><i class="bi bi-translate"></i></div><h2 class="h5">{% trans "Languages" %}</h2><p>{% trans "Services may include Ge’ez, Amharic, and English. Publish the language schedule clearly here." %}</p></article></div>
+<div class="col-md-6 col-xl-3"><article class="content-card h-100"><div class="icon-circle"><i class="bi bi-people"></i></div><h2 class="h5">{% trans "Children and Families" %}</h2><p>{% trans "Families can learn where children gather, when Sunday School begins, and how registration works." %}</p></article></div>
+<div class="col-md-6 col-xl-3"><article class="content-card h-100"><div class="icon-circle"><i class="bi bi-universal-access"></i></div><h2 class="h5">{% trans "Accessibility" %}</h2><p>{% trans "Publish accessible entrances, seating, restrooms, parking, and assistance contact information." %}</p></article></div>
+</div>
+<div class="row g-5">
+<div class="col-lg-7"><h2>{% trans "What to Expect" %}</h2><p>{% trans "Explain worship length, respectful dress, standing and seating, participation, Holy Communion guidance, children’s arrangements, and fellowship after service. This information should be approved by clergy." %}</p></div>
+<div class="col-lg-5"><aside class="content-card"><h2 class="h4">{% trans "Directions and Contact" %}</h2>{% if settings.address %}<p><i class="bi bi-geo-alt me-2"></i>{{ settings.address }}</p>{% endif %}{% if settings.phone %}<p><i class="bi bi-telephone me-2"></i>{{ settings.phone }}</p>{% endif %}<a class="btn btn-church w-100" href="{% url 'website:contact' %}">{% trans "Ask a Question" %}</a></aside></div>
+</div>
+{% if featured_services %}<div class="section-heading mt-5"><h2>{% trans "Featured Service Times" %}</h2></div><div class="row g-4">{% for service in featured_services %}<div class="col-md-6"><div class="content-card"><strong>{{ service.get_day_of_week_display }} — {{ service.name }}</strong><div>{{ service.start_time|time:"g:i A" }}{% if service.end_time %}–{{ service.end_time|time:"g:i A" }}{% endif %}</div></div></div>{% endfor %}</div>{% endif %}
+</div></section>
+{% endblock %}

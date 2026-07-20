@@ -1,0 +1,16 @@
+{% extends "website/base.html" %}
+{% load i18n %}
+{% block title %}{{ event.title }} | {{ church_site.short_name }}{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">{% trans "Event" %}</span><h1>{{ event.title }}</h1><p>{{ event.start_at|date:"l, F j, Y · g:i A" }}</p></div></section>
+<section class="section-space"><div class="container"><div class="row g-5">
+<div class="col-lg-8"><div class="lead">{{ event.description|linebreaks }}</div></div>
+<div class="col-lg-4"><aside class="content-card">
+<h2 class="h5">{% trans "Event Details" %}</h2>
+<p><strong>{% trans "Date:" %}</strong><br>{{ event.start_at|date:"F j, Y" }}</p>
+<p><strong>{% trans "Time:" %}</strong><br>{{ event.start_at|date:"g:i A" }}{% if event.end_at %}–{{ event.end_at|date:"g:i A" }}{% endif %}</p>
+{% if event.location %}<p><strong>{% trans "Location:" %}</strong><br>{{ event.location }}</p>{% endif %}
+{% if event.registration_url %}<a class="btn btn-church w-100" href="{{ event.registration_url }}">{% trans "Register" %}</a>{% endif %}
+</aside></div>
+</div></div></section>
+{% endblock %}

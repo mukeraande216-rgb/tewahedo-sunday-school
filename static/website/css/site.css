@@ -1,0 +1,285 @@
+:root {
+    --church-red: #741f2b;
+    --church-red-dark: #53141d;
+    --church-gold: #c9a14a;
+    --church-gold-light: #e4cf9d;
+    --church-ink: #1f2933;
+    --church-muted: #5f6b76;
+    --church-cream: #fbf8f1;
+    --church-soft: #f3efe6;
+    --church-border: #e4ded2;
+    --church-white: #ffffff;
+    --church-dark: #191c21;
+    --shadow-soft: 0 18px 50px rgba(31, 41, 51, .10);
+}
+
+html { scroll-behavior: smooth; }
+body {
+    color: var(--church-ink);
+    background: var(--church-white);
+    font-family: Inter, "Noto Sans Ethiopic", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.65;
+}
+a { color: var(--church-red); }
+a:hover { color: var(--church-red-dark); }
+
+.skip-link {
+    position: fixed;
+    top: -100px;
+    left: 1rem;
+    z-index: 9999;
+    background: #fff;
+    color: #000;
+    padding: .75rem 1rem;
+    border: 2px solid #000;
+}
+.skip-link:focus { top: 1rem; }
+
+.announcement-bar {
+    background: var(--church-red-dark);
+    color: #fff;
+    font-size: .94rem;
+}
+.announcement-link { color: #fff; font-weight: 700; }
+
+.site-header {
+    background: rgba(255,255,255,.97);
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    transition: box-shadow .2s ease;
+}
+.site-header.is-scrolled { box-shadow: 0 8px 30px rgba(0,0,0,.08); }
+
+.navbar { min-height: 82px; }
+.navbar-brand { color: var(--church-ink); }
+.brand-mark {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    color: var(--church-gold);
+    background: var(--church-red);
+    border-radius: 50%;
+    font-size: 1.55rem;
+}
+.brand-subtitle { color: var(--church-muted); font-size: .72rem; }
+.nav-link { color: var(--church-ink); font-weight: 650; }
+.nav-link:hover, .nav-link:focus { color: var(--church-red); }
+
+.btn-church {
+    background: var(--church-red);
+    border-color: var(--church-red);
+    color: #fff;
+    font-weight: 700;
+}
+.btn-church:hover, .btn-church:focus {
+    background: var(--church-red-dark);
+    border-color: var(--church-red-dark);
+    color: #fff;
+}
+.btn-outline-church {
+    border-color: var(--church-red);
+    color: var(--church-red);
+    font-weight: 700;
+}
+.btn-outline-church:hover, .btn-outline-church:focus {
+    background: var(--church-red);
+    border-color: var(--church-red);
+    color: #fff;
+}
+
+.hero-section {
+    position: relative;
+    color: #fff;
+    background:
+      linear-gradient(120deg, rgba(39,13,17,.95), rgba(116,31,43,.72)),
+      var(--hero-image, linear-gradient(135deg, #351319, #741f2b));
+    background-size: cover;
+    background-position: center;
+}
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 80% 20%, rgba(201,161,74,.28), transparent 32%);
+}
+.hero-content { position: relative; z-index: 1; }
+.min-vh-70 { min-height: 70vh; }
+.eyebrow {
+    display: inline-block;
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+.text-church { color: var(--church-red) !important; }
+.text-gold { color: var(--church-gold-light) !important; }
+
+.quick-actions { margin-top: -42px; position: relative; z-index: 3; }
+.quick-action {
+    min-height: 112px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .45rem;
+    background: #fff;
+    color: var(--church-ink);
+    text-decoration: none;
+    font-weight: 750;
+    border-right: 1px solid var(--church-border);
+}
+.quick-action:hover, .quick-action:focus {
+    background: var(--church-cream);
+    color: var(--church-red);
+}
+.quick-action i { font-size: 1.55rem; color: var(--church-red); }
+
+.section-space { padding: 5rem 0; }
+.bg-soft { background: var(--church-soft); }
+.bg-dark-section { background: var(--church-dark); }
+.section-heading { max-width: 720px; margin-bottom: 2rem; }
+.section-heading h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; }
+
+.content-card {
+    display: block;
+    padding: 1.65rem;
+    background: #fff;
+    border: 1px solid var(--church-border);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-soft);
+}
+.linked-card {
+    color: inherit;
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+.linked-card:hover, .linked-card:focus {
+    transform: translateY(-4px);
+    color: inherit;
+    box-shadow: 0 24px 60px rgba(31,41,51,.16);
+}
+.icon-circle {
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 1.2rem;
+    border-radius: 50%;
+    background: var(--church-cream);
+    color: var(--church-red);
+    font-size: 1.35rem;
+}
+.time-display { font-size: 1.12rem; font-weight: 800; color: var(--church-red); }
+
+.event-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1.4rem;
+    background: #fff;
+    border: 1px solid var(--church-border);
+    border-radius: 1rem;
+}
+.event-card a { color: var(--church-ink); text-decoration: none; }
+.event-card a:hover { color: var(--church-red); }
+.event-date {
+    width: 66px;
+    height: 76px;
+    flex: 0 0 66px;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    background: var(--church-red);
+    color: #fff;
+    border-radius: .8rem;
+}
+.event-date span { font-size: .72rem; font-weight: 800; text-transform: uppercase; }
+.event-date strong { font-size: 1.65rem; line-height: 1; }
+
+.ministry-card {
+    display: block;
+    padding: 1.5rem;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 1rem;
+    background: rgba(255,255,255,.06);
+}
+.ministry-card:hover, .ministry-card:focus {
+    color: #fff;
+    background: rgba(255,255,255,.10);
+}
+.ministry-icon { font-size: 1.6rem; color: var(--church-gold-light); }
+.text-link, .text-link-light { font-weight: 750; text-decoration: none; }
+.text-link-light { color: #fff; }
+
+.visitor-cta {
+    color: var(--church-ink);
+    background: linear-gradient(135deg, var(--church-cream), #fff);
+    border: 1px solid var(--church-border);
+}
+
+.page-hero {
+    padding: 5rem 0;
+    color: #fff;
+    background:
+        radial-gradient(circle at 85% 20%, rgba(201,161,74,.28), transparent 30%),
+        linear-gradient(135deg, var(--church-red-dark), var(--church-red));
+}
+.page-hero h1 { font-size: clamp(2.4rem, 5vw, 4.4rem); font-weight: 850; }
+.page-hero p { max-width: 720px; font-size: 1.15rem; }
+
+.profile-image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: .75rem;
+}
+.check-list { padding-left: 0; list-style: none; }
+.check-list li { margin-bottom: .75rem; }
+.check-list li::before { content: "✓"; color: var(--church-red); font-weight: 900; margin-right: .65rem; }
+
+.form-control, .form-select {
+    min-height: 48px;
+    border-color: #cfc8bb;
+}
+.form-control:focus, .form-select:focus {
+    border-color: var(--church-red);
+    box-shadow: 0 0 0 .25rem rgba(116,31,43,.18);
+}
+textarea.form-control { min-height: 140px; }
+
+.site-footer {
+    color: #e8e8e8;
+    background: #111419;
+}
+.site-footer a { color: #f1dfb5; text-decoration: none; }
+.site-footer a:hover, .site-footer a:focus { color: #fff; text-decoration: underline; }
+.footer-links li { margin-bottom: .55rem; }
+.social-links { display: flex; gap: .75rem; }
+.social-links a {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+}
+
+@media (max-width: 1199.98px) {
+    .navbar-collapse { padding: 1rem 0 1.5rem; }
+    .navbar-nav { align-items: stretch !important; gap: .35rem; }
+    .language-form { max-width: 160px; margin-top: .4rem; }
+}
+@media (max-width: 767.98px) {
+    .section-space { padding: 3.75rem 0; }
+    .quick-actions { margin-top: -24px; }
+    .quick-action { min-height: 100px; font-size: .9rem; text-align: center; }
+    .hero-section .display-3 { font-size: 2.65rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+        animation: none !important;
+    }
+}

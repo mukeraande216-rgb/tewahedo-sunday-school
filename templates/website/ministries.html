@@ -1,0 +1,19 @@
+{% extends "website/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Ministries" %} | {{ church_site.short_name }}{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">{% trans "Belong, Learn, and Serve" %}</span><h1>{% trans "Church Ministries" %}</h1><p>{% trans "Programs for children, youth, adults, families, worship, education, and community service." %}</p></div></section>
+<section class="section-space"><div class="container"><div class="row g-4">
+{% for ministry in ministries %}
+<div class="col-md-6 col-xl-4"><a class="content-card linked-card h-100" href="{{ ministry.get_absolute_url }}">
+<div class="icon-circle"><i class="bi bi-people"></i></div>
+<h2 class="h4">{{ ministry.name }}</h2>
+{% if ministry.audience %}<p class="text-church fw-semibold">{{ ministry.audience }}</p>{% endif %}
+<p>{{ ministry.summary|truncatechars:220 }}</p>
+<span class="text-link">{% trans "View ministry" %} <i class="bi bi-arrow-right"></i></span>
+</a></div>
+{% empty %}
+<div class="col-12"><div class="alert alert-info">{% trans "Ministry information will be published soon." %}</div></div>
+{% endfor %}
+</div></div></section>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "website/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Church Services" %} | {{ church_site.short_name }}{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">{% trans "Pastoral and Sacramental Care" %}</span><h1>{% trans "Request a Church Service" %}</h1><p>{% trans "Begin a request for baptism, Holy Matrimony, memorial services, counseling, confession, or church records." %}</p></div></section>
+<section class="section-space"><div class="container"><div class="row g-5">
+<div class="col-lg-5"><h2>{% trans "Before You Submit" %}</h2><p>{% trans "Submitting this form begins the review process. It does not confirm a date or service. The church office or clergy will contact you with requirements and availability." %}</p><div class="alert alert-warning"><strong>{% trans "Privacy:" %}</strong> {% trans "Do not enter highly sensitive personal, medical, or financial information in this form." %}</div></div>
+<div class="col-lg-7"><form method="post" class="content-card" novalidate>{% csrf_token %}
+{% for field in form %}
+<div class="mb-3 {% if field.field.widget.input_type == 'checkbox' %}form-check{% endif %}">
+{% if field.field.widget.input_type == 'checkbox' %}{{ field }} <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>{% else %}<label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% endif %}
+{% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
+{% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+</div>
+{% endfor %}
+<button class="btn btn-church btn-lg" type="submit">{% trans "Submit Request" %}</button>
+</form></div>
+</div></div></section>
+{% endblock %}

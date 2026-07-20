@@ -1,0 +1,13 @@
+{% extends "website/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Contact" %} | {{ church_site.short_name }}{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">{% trans "Get in Touch" %}</span><h1>{% trans "Contact the Church" %}</h1><p>{% trans "Questions about worship, membership, Sunday School, events, or pastoral services." %}</p></div></section>
+<section class="section-space"><div class="container"><div class="row g-5">
+<div class="col-lg-5"><div class="content-card h-100"><h2 class="h4">{% trans "Church Office" %}</h2>{% if settings.address %}<p><i class="bi bi-geo-alt me-2"></i>{{ settings.address }}</p>{% endif %}{% if settings.phone %}<p><i class="bi bi-telephone me-2"></i><a href="tel:{{ settings.phone }}">{{ settings.phone }}</a></p>{% endif %}{% if settings.email %}<p><i class="bi bi-envelope me-2"></i><a href="mailto:{{ settings.email }}">{{ settings.email }}</a></p>{% endif %}{% if settings.office_hours %}<p><i class="bi bi-clock me-2"></i>{{ settings.office_hours }}</p>{% endif %}{% if settings.map_url %}<a class="btn btn-outline-church" href="{{ settings.map_url }}">{% trans "Open Directions" %}</a>{% endif %}</div></div>
+<div class="col-lg-7"><form method="post" class="content-card" novalidate>{% csrf_token %}
+{% for field in form %}<div class="mb-3"><label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}</div>{% endfor %}
+<button class="btn btn-church btn-lg" type="submit">{% trans "Send Message" %}</button>
+</form></div>
+</div></div></section>
+{% endblock %}

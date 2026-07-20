@@ -1,0 +1,10 @@
+{% extends "website/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Give" %} | {{ church_site.short_name }}{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">{% trans "Support the Mission" %}</span><h1>{% trans "Give to St. Urael Church" %}</h1><p>{% trans "Support worship, education, charity, community service, and the future of the church." %}</p></div></section>
+<section class="section-space"><div class="container"><div class="row g-5 align-items-center">
+<div class="col-lg-7"><h2>{% trans "Secure and Transparent Giving" %}</h2><p>{% trans "Use an approved payment provider, provide automatic receipts, explain designated funds clearly, and publish whom donors should contact with questions." %}</p><ul class="check-list"><li>{% trans "Tithe and offering" %}</li><li>{% trans "Building fund" %}</li><li>{% trans "Sunday School and youth ministry" %}</li><li>{% trans "Charity and community assistance" %}</li><li>{% trans "Memorial and special-purpose gifts" %}</li></ul></div>
+<div class="col-lg-5"><aside class="content-card text-center"><i class="bi bi-heart-fill display-3 text-church"></i><h2 class="h4 mt-3">{% trans "Online Giving" %}</h2>{% if settings.donation_url %}<a class="btn btn-church btn-lg w-100 mt-3" href="{{ settings.donation_url }}">{% trans "Give Securely" %}</a>{% else %}<p>{% trans "The approved online giving link will be added by the church administrator." %}</p>{% endif %}</aside></div>
+</div></div></section>
+{% endblock %}

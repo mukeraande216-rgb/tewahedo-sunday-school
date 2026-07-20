@@ -1,0 +1,15 @@
+{% extends "website/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Livestream" %} | {{ church_site.short_name }}{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">{% trans "Worship With Us Online" %}</span><h1>{% trans "Church Livestream" %}</h1><p>{% trans "Watch current services and recent worship broadcasts." %}</p></div></section>
+<section class="section-space"><div class="container">
+{% if settings.livestream_url %}
+<div class="ratio ratio-16x9 rounded-4 overflow-hidden shadow-lg"><iframe src="{{ settings.livestream_url }}" title="{% trans 'Church livestream' %}" allowfullscreen></iframe></div>
+{% elif latest_sermon %}
+<div class="ratio ratio-16x9 rounded-4 overflow-hidden shadow-lg"><iframe src="{{ latest_sermon.embed_url }}" title="{{ latest_sermon.title }}" allowfullscreen></iframe></div>
+{% else %}
+<div class="content-card text-center"><i class="bi bi-broadcast display-3 text-church"></i><h2 class="mt-3">{% trans "The livestream link will be published before the service." %}</h2>{% if settings.youtube_url %}<a class="btn btn-church mt-3" href="{{ settings.youtube_url }}">{% trans "Open YouTube Channel" %}</a>{% endif %}</div>
+{% endif %}
+</div></section>
+{% endblock %}
