@@ -1,26 +1,53 @@
 {% extends "website/base.html" %}
-{% load i18n %}
-
+{% load static i18n %}
 {% block title %}{{ settings.short_name|default:"St. Urael Church" }}{% endblock %}
 
 {% block content %}
-<section class="hero-section" {% if settings.hero_image_url %}style="--hero-image: url('{{ settings.hero_image_url }}');"{% endif %}>
+<section class="hero-section"
+         {% if settings.hero_image_url %}
+         style="--hero-image: url('{{ settings.hero_image_url }}');"
+         {% endif %}>
+
     <div class="hero-overlay"></div>
+
     <div class="container hero-content py-5">
         <div class="row align-items-center min-vh-70">
-            <div class="col-lg-8 py-5">
+
+            <div class="col-lg-7 py-5">
                 <span class="eyebrow">{% trans "Welcome" %}</span>
-                <h1 class="display-3 fw-bold mt-3">{{ settings.church_name|default:"St. Urael Ethiopian Orthodox Tewahedo Church" }}</h1>
-                <p class="lead col-xl-9">{{ settings.welcome }}</p>
+
+                <h1 class="display-3 fw-bold mt-3">
+                    {{ settings.church_name|default:"St. Urael Ethiopian Orthodox Tewahedo Church" }}
+                </h1>
+
+                <p class="lead col-xl-9">
+                    {{ settings.welcome }}
+                </p>
+
                 <div class="d-flex flex-wrap gap-3 mt-4">
-                    <a class="btn btn-light btn-lg" href="{% url 'website:new_here' %}">
+                    <a class="btn btn-light btn-lg"
+                       href="{% url 'website:new_here' %}">
                         {% trans "Plan Your Visit" %}
                     </a>
-                    <a class="btn btn-outline-light btn-lg" href="{% url 'website:livestream' %}">
-                        <i class="bi bi-play-circle me-2" aria-hidden="true"></i>{% trans "Watch Live" %}
+
+                    <a class="btn btn-outline-light btn-lg"
+                       href="{% url 'website:livestream' %}">
+                        <i class="bi bi-play-circle me-2"
+                           aria-hidden="true"></i>
+                        {% trans "Watch Live" %}
                     </a>
                 </div>
             </div>
+
+            <div class="col-lg-5 text-center py-5">
+                <img
+                    src="{% static 'website/images/st-urael-art.png' %}"
+                    class="img-fluid rounded-4 shadow-lg"
+                    alt="Traditional Ethiopian Orthodox image of Saint Urael"
+                    style="max-height: 560px;"
+                >
+            </div>
+
         </div>
     </div>
 </section>
