@@ -15,3 +15,5 @@ media/
 Thumbs.db
 
 *.log
+db_backup_before_church_content.sqlite3
+
