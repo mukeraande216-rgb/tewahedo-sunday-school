@@ -1,16 +1,23 @@
 :root {
-    --church-red: #741f2b;
-    --church-red-dark: #53141d;
-    --church-gold: #c9a14a;
-    --church-gold-light: #e4cf9d;
-    --church-ink: #1f2933;
-    --church-muted: #5f6b76;
-    --church-cream: #fbf8f1;
-    --church-soft: #f3efe6;
-    --church-border: #e4ded2;
+    --church-red: #8f1d2c;
+    --church-red-dark: #5f111d;
+    --church-gold: #d6a72c;
+    --church-gold-light: #f4dc8a;
+
+    --church-green: #1f6547;
+    --church-blue: #234f78;
+
+    --church-ink: #20252b;
+    --church-muted: #626b73;
+
+    --church-cream: #fffaf0;
+    --church-soft: #f7f0df;
+    --church-border: #dfd2b7;
+
     --church-white: #ffffff;
-    --church-dark: #191c21;
-    --shadow-soft: 0 18px 50px rgba(31, 41, 51, .10);
+    --church-dark: #14191d;
+
+    --shadow-soft: 0 18px 50px rgba(27, 31, 35, 0.13);
 }
 
 html { scroll-behavior: smooth; }
@@ -255,29 +262,155 @@ textarea.form-control { min-height: 140px; }
 .site-footer a { color: #f1dfb5; text-decoration: none; }
 .site-footer a:hover, .site-footer a:focus { color: #fff; text-decoration: underline; }
 .footer-links li { margin-bottom: .55rem; }
-.social-links { display: flex; gap: .75rem; }
+.social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.25rem;
+}
+
 .social-links a {
-    width: 40px;
-    height: 40px;
-    display: grid;
-    place-items: center;
-    border: 1px solid rgba(255,255,255,.3);
-    border-radius: 50%;
+    min-width: 150px;
+    min-height: 56px;
+    padding: 0 1.25rem;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .7rem;
+
+    border: 2px solid transparent;
+    border-radius: .75rem;
+
+    color: #ffffff !important;
+    font-size: 1rem;
+    font-weight: 800;
+    text-decoration: none !important;
+
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .30);
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
+}
+
+.social-links a i {
+    font-size: 1.45rem;
+}
+
+.social-links a[href*="youtube"] {
+    background: #ff0033;
+    border-color: #ff0033;
+}
+
+.social-links a[href*="youtube"]::after {
+    content: "YouTube";
+}
+
+.social-links a[href*="facebook"] {
+    background: #1877f2;
+    border-color: #1877f2;
+}
+
+.social-links a[href*="facebook"]::after {
+    content: "Facebook";
+}
+
+.social-links a:hover,
+.social-links a:focus {
+    color: #ffffff !important;
+    transform: translateY(-3px);
+    filter: brightness(1.1);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, .40);
+}
+
+/* Prominent Donate button in the header */
+.site-header .btn-church {
+    min-height: 46px;
+    padding: .65rem 1.25rem;
+
+    background: var(--church-gold);
+    border: 2px solid var(--church-gold);
+    color: #211807;
+
+    font-size: 1rem;
+    font-weight: 850;
+
+    box-shadow: 0 7px 20px rgba(214, 167, 44, .38);
+}
+
+.site-header .btn-church:hover,
+.site-header .btn-church:focus {
+    background: #bd8b12;
+    border-color: #bd8b12;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* Highlight Donate Online on the homepage */
+.quick-actions .row > div:last-child .quick-action {
+    background: #fff4d3;
+    color: var(--church-red-dark);
+}
+
+.quick-actions .row > div:last-child .quick-action i {
+    color: var(--church-gold);
+}
+
+.quick-actions .row > div:last-child .quick-action:hover,
+.quick-actions .row > div:last-child .quick-action:focus {
+    background: var(--church-gold);
+    color: #211807;
 }
 
 @media (max-width: 1199.98px) {
-    .navbar-collapse { padding: 1rem 0 1.5rem; }
-    .navbar-nav { align-items: stretch !important; gap: .35rem; }
-    .language-form { max-width: 160px; margin-top: .4rem; }
+    .navbar-collapse {
+        padding: 1rem 0 1.5rem;
+    }
+
+    .navbar-nav {
+        align-items: stretch !important;
+        gap: .35rem;
+    }
+
+    .language-form {
+        max-width: 160px;
+        margin-top: .4rem;
+    }
 }
+
 @media (max-width: 767.98px) {
-    .section-space { padding: 3.75rem 0; }
-    .quick-actions { margin-top: -24px; }
-    .quick-action { min-height: 100px; font-size: .9rem; text-align: center; }
-    .hero-section .display-3 { font-size: 2.65rem; }
+    .section-space {
+        padding: 3.75rem 0;
+    }
+
+    .quick-actions {
+        margin-top: -24px;
+    }
+
+    .quick-action {
+        min-height: 100px;
+        font-size: .9rem;
+        text-align: center;
+    }
+
+    .hero-section .display-3 {
+        font-size: 2.65rem;
+    }
+
+    .social-links {
+        flex-direction: column;
+    }
+
+    .social-links a {
+        width: 100%;
+    }
 }
+
 @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
         scroll-behavior: auto !important;
         transition: none !important;
         animation: none !important;
