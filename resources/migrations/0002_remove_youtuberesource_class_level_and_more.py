@@ -15,14 +15,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='youtuberesource',
-            name='class_level',
-        ),
-        migrations.RemoveField(
-            model_name='youtuberesource',
-            name='created_by',
-        ),
+
         migrations.AlterModelOptions(
             name='resource',
             options={'ordering': ['-created_at']},
