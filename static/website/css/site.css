@@ -416,3 +416,72 @@ textarea.form-control { min-height: 140px; }
         animation: none !important;
     }
 }
+
+/* Warm church header palette */
+.site-header {
+    background: linear-gradient(
+        90deg,
+        #fffaf0 0%,
+        #f6ead0 50%,
+        #fffaf0 100%
+    );
+    border-bottom: 3px solid var(--church-gold);
+    box-shadow: 0 8px 24px rgba(95, 17, 29, 0.12);
+}
+
+/* Church name and navigation */
+.site-header .navbar-brand,
+.site-header .nav-link {
+    color: var(--church-red-dark);
+}
+
+.site-header .nav-link:hover,
+.site-header .nav-link:focus {
+    color: var(--church-red);
+}
+
+/* Saint Urael symbol */
+.site-header .brand-mark {
+    background: var(--church-red-dark);
+    color: var(--church-gold-light);
+    box-shadow: 0 5px 14px rgba(95, 17, 29, 0.25);
+}
+
+/* Subtitle */
+.site-header .brand-subtitle {
+    color: #725b49;
+}
+
+/* Watch Live button */
+.site-header .btn-outline-church {
+    background: #ffffff;
+    border: 2px solid var(--church-red);
+    color: var(--church-red);
+}
+
+.site-header .btn-outline-church:hover,
+.site-header .btn-outline-church:focus {
+    background: var(--church-red);
+    color: #ffffff;
+}
+
+/* Donate button */
+.site-header .btn-church {
+    background: var(--church-gold);
+    border-color: var(--church-gold);
+    color: #352306;
+}
+
+.site-header .btn-church:hover,
+.site-header .btn-church:focus {
+    background: var(--church-red);
+    border-color: var(--church-red);
+    color: #ffffff;
+}
+
+/* Language selector */
+.site-header .form-select {
+    background-color: #fffdf7;
+    border-color: #d8c596;
+    color: var(--church-red-dark);
+}
