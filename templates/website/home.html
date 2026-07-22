@@ -39,18 +39,23 @@
                         style="
                             font-size: clamp(2rem, 4vw, 4rem);
                             line-height: 1.05;
-                            max-width: 850px;
+                           max-width: 1050px;
+                           font-size: clamp(2rem, 3.6vw, 4rem);
                         ">
                         {{ settings.church_name|default:"St. Urael Ethiopian Orthodox Tewahedo Church" }}
                     </h1>
 
-                    <p class="lead text-white mb-0"
-                       style="max-width: 760px;">
-                        {{ settings.welcome }}
-                    </p>
+                   <p class="lead text-white mb-0"
+                        style="
+                            max-width: 560px;
+                            font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+                            line-height: 1.55;
+                        ">
+                            {{ settings.welcome }}
+                   </p>
                 </div>
 
-                <div class="col-lg-4">
+                <<div class="col-lg-3">
                     <div class="d-flex flex-wrap gap-3 justify-content-lg-end">
 
                         <a class="btn btn-light btn-lg"
@@ -215,7 +220,7 @@
     <div class="container">
         <div class="visitor-cta rounded-4 p-4 p-lg-5">
             <div class="row align-items-center g-4">
-                <div class="col-lg-8">
+                <<div class="col-lg-9">
                     <span class="eyebrow text-church">{% trans "First Time Visiting?" %}</span>
                     <h2 class="mt-2">{% trans "You are welcome here." %}</h2>
                     <p class="lead mb-0">{% trans "Find service times, directions, parking guidance, language information, children’s programs, and what to expect during worship." %}</p>
