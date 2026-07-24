@@ -1,0 +1,586 @@
+{% extends "base.html" %}
+
+{% block title %}Membership Directory | St. Urael Church{% endblock %}
+
+{% block main_class %}container-fluid px-3 px-lg-5 py-4{% endblock %}
+
+{% block extra_css %}
+<style>
+    .membership-page {
+        width: 100%;
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+
+    .membership-header {
+        padding: 2rem 2.25rem;
+        margin-bottom: 1.5rem;
+        color: white;
+        background:
+            radial-gradient(
+                circle at 90% 10%,
+                rgba(214, 167, 44, .28),
+                transparent 32%
+            ),
+            linear-gradient(135deg, #50101a, #8f1d2c);
+        border-radius: 1rem;
+        box-shadow: 0 18px 42px rgba(40, 20, 25, .15);
+    }
+
+    .membership-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .membership-header h1 {
+        margin-bottom: .4rem;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        font-weight: 800;
+    }
+
+    .membership-header p {
+        max-width: 700px;
+        margin-bottom: 0;
+        color: rgba(255, 255, 255, .85);
+    }
+
+    .membership-header-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: .7rem;
+        flex-shrink: 0;
+    }
+
+    .membership-header-actions .btn {
+        min-height: 46px;
+        padding: .65rem 1rem;
+        font-weight: 700;
+        border-radius: .6rem;
+    }
+
+    .btn-membership-gold {
+        color: #2d2108;
+        background: #d6a72c;
+        border-color: #d6a72c;
+    }
+
+    .btn-membership-gold:hover {
+        color: white;
+        background: #a87b13;
+        border-color: #a87b13;
+    }
+
+    .membership-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .membership-stat {
+        padding: 1.35rem 1.5rem;
+        background: white;
+        border: 1px solid #e3e6ea;
+        border-radius: .9rem;
+        box-shadow: 0 9px 25px rgba(20, 25, 30, .06);
+    }
+
+    .membership-stat span {
+        display: block;
+        margin-bottom: .25rem;
+        color: #667085;
+        font-size: .78rem;
+        font-weight: 800;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+    }
+
+    .membership-stat strong {
+        font-size: 2rem;
+        line-height: 1;
+    }
+
+    .membership-panel {
+        overflow: hidden;
+        background: white;
+        border: 1px solid #e3e6ea;
+        border-radius: 1rem;
+        box-shadow: 0 15px 38px rgba(20, 25, 30, .08);
+    }
+
+    .membership-search {
+        display: grid;
+        grid-template-columns: minmax(300px, 1fr) auto auto;
+        gap: .75rem;
+        padding: 1.25rem;
+        border-bottom: 1px solid #e3e6ea;
+    }
+
+    .membership-search .form-control,
+    .membership-search .btn {
+        min-height: 48px;
+    }
+
+    .membership-panel-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.25rem;
+        background: #fbf7ed;
+        border-bottom: 1px solid #e3e6ea;
+    }
+
+    .membership-panel-title h2 {
+        margin: 0;
+        font-size: 1.15rem;
+        font-weight: 800;
+    }
+
+    .membership-table {
+        min-width: 1000px;
+        margin: 0;
+    }
+
+    .membership-table th {
+        padding: .9rem 1rem;
+        color: #475467;
+        background: #f8f9fa;
+        font-size: .76rem;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .membership-table td {
+        padding: 1rem;
+        vertical-align: middle;
+    }
+
+    .member-id {
+        color: #8f1d2c;
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    .member-name {
+        font-weight: 700;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: .35rem .7rem;
+        border-radius: 999px;
+        font-size: .76rem;
+        font-weight: 800;
+    }
+
+    .status-active {
+        color: #0f5132;
+        background: #d1e7dd;
+    }
+
+    .status-inactive {
+        color: #565e64;
+        background: #e9ecef;
+    }
+
+    .member-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: .45rem;
+        white-space: nowrap;
+    }
+
+    .mobile-members {
+        display: none;
+    }
+
+    @media (max-width: 991.98px) {
+        .membership-header-row {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .membership-header-actions {
+            justify-content: flex-start;
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .membership-header {
+            padding: 1.4rem;
+        }
+
+        .membership-header-actions {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        .membership-header-actions .btn {
+            width: 100%;
+        }
+
+        .membership-stats {
+            grid-template-columns: 1fr;
+        }
+
+        .membership-search {
+            grid-template-columns: 1fr;
+        }
+
+        .desktop-members {
+            display: none;
+        }
+
+        .mobile-members {
+            display: grid;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+        }
+
+        .mobile-member-card {
+            padding: 1rem;
+            background: white;
+            border: 1px solid #e3e6ea;
+            border-radius: .85rem;
+        }
+
+        .mobile-member-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .mobile-member-header h3 {
+            margin: .2rem 0 0;
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+
+        .mobile-member-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .8rem;
+            margin-bottom: 1rem;
+        }
+
+        .mobile-member-details small {
+            display: block;
+            color: #667085;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .mobile-member-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .6rem;
+        }
+
+        .mobile-member-actions .btn,
+        .mobile-member-actions form,
+        .mobile-member-actions button {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 430px) {
+        .mobile-member-details,
+        .mobile-member-actions {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="membership-page">
+
+    <section class="membership-header">
+        <div class="membership-header-row">
+            <div>
+                <div class="text-uppercase fw-bold small text-warning mb-2">
+                    Church Administration
+                </div>
+
+                <h1>Membership Directory</h1>
+
+                <p>
+                    Manage church membership records, contact information,
+                    status, and Excel reporting from one secure workspace.
+                </p>
+            </div>
+
+            <div class="membership-header-actions">
+                <a
+                    class="btn btn-light"
+                    href="{% url 'membership:member_export' %}"
+                >
+                    Export Excel
+                </a>
+        <a
+                class="btn btn-outline-light position-relative"
+                href="{% url 'membership:application_list' %}"
+        >
+                Review Applications
+
+                {% if applications_needing_review_count %}
+                       <span
+                           class="position-absolute top-0 start-100 translate-middle
+                                  badge rounded-pill bg-warning text-dark"
+                       >
+                           {{ applications_needing_review_count }}
+                       </span>
+                    {% endif %}
+                </a>
+
+                <a
+                    class="btn btn-outline-light"
+                    href="{% url 'membership:member_import' %}"
+                >
+                    Import Excel
+                </a>
+
+                <a
+                    class="btn btn-membership-gold"
+                    href="{% url 'membership:member_create' %}"
+                >
+                    Add New Member
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="membership-stats">
+        <article class="membership-stat">
+            <span>Total Members</span>
+            <strong>{{ total_count }}</strong>
+        </article>
+
+        <article class="membership-stat">
+            <span>Active Members</span>
+            <strong>{{ active_count }}</strong>
+        </article>
+
+        <article class="membership-stat">
+            <span>Inactive Members</span>
+            <strong>{{ inactive_count }}</strong>
+        </article>
+    </section>
+
+    <section class="membership-panel">
+        <form method="get" class="membership-search">
+            <input
+                type="search"
+                name="q"
+                value="{{ search_query }}"
+                class="form-control"
+                placeholder="Search by member ID, name, baptism name, phone, address, or Yenesha Abat"
+            >
+
+            <button class="btn btn-danger" type="submit">
+                Search Members
+            </button>
+
+            {% if search_query %}
+                <a
+                    class="btn btn-outline-secondary"
+                    href="{% url 'membership:member_list' %}"
+                >
+                    Clear
+                </a>
+            {% endif %}
+        </form>
+
+        <div class="membership-panel-title">
+            <h2>
+                {% if search_query %}
+                    Search Results
+                {% else %}
+                    All Members
+                {% endif %}
+            </h2>
+
+            <span class="badge text-bg-secondary">
+                {{ members|length }}
+                record{{ members|length|pluralize }}
+            </span>
+        </div>
+
+        <div class="table-responsive desktop-members">
+            <table class="table table-hover membership-table">
+                <thead>
+                    <tr>
+                        <th>Member ID</th>
+                        <th>Full Name</th>
+                        <th>Baptism Name</th>
+                        <th>Phone Number</th>
+                        <th>Membership Date</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for member in members %}
+                        <tr>
+                            <td class="member-id">
+                                {{ member.member_id }}
+                            </td>
+
+                            <td class="member-name">
+                                {{ member.full_name }}
+                            </td>
+
+                            <td>{{ member.baptism_name|default:"—" }}</td>
+                            <td>{{ member.phone_number|default:"—" }}</td>
+
+                            <td>
+                                {% if member.membership_date %}
+                                    {{ member.membership_date|date:"M j, Y" }}
+                                {% else %}
+                                    —
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if member.is_active %}
+                                    <span class="status-badge status-active">
+                                        Active
+                                    </span>
+                                {% else %}
+                                    <span class="status-badge status-inactive">
+                                        Inactive
+                                    </span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <div class="member-actions">
+                                    <a
+                                        class="btn btn-sm btn-outline-primary"
+                                        href="{% url 'membership:member_update' member.pk %}"
+                                    >
+                                        Edit
+                                    </a>
+
+                                    {% if member.is_active %}
+                                        <form
+                                            method="post"
+                                            action="{% url 'membership:member_deactivate' member.pk %}"
+                                            onsubmit="return confirm('Deactivate this member?');"
+                                        >
+                                            {% csrf_token %}
+
+                                            <button
+                                                class="btn btn-sm btn-outline-danger"
+                                                type="submit"
+                                            >
+                                                Deactivate
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center py-5 text-muted">
+                                No membership records found.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mobile-members">
+            {% for member in members %}
+                <article class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <div>
+                            <span class="member-id">
+                                {{ member.member_id }}
+                            </span>
+                            <h3>{{ member.full_name }}</h3>
+                        </div>
+
+                        {% if member.is_active %}
+                            <span class="status-badge status-active">
+                                Active
+                            </span>
+                        {% else %}
+                            <span class="status-badge status-inactive">
+                                Inactive
+                            </span>
+                        {% endif %}
+                    </div>
+
+                    <div class="mobile-member-details">
+                        <div>
+                            <small>Baptism Name</small>
+                            {{ member.baptism_name|default:"—" }}
+                        </div>
+
+                        <div>
+                            <small>Phone</small>
+                            {{ member.phone_number|default:"—" }}
+                        </div>
+
+                        <div>
+                            <small>Membership Date</small>
+
+                            {% if member.membership_date %}
+                                {{ member.membership_date|date:"M j, Y" }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <small>Yenesha Abat</small>
+                            {{ member.yenesha_abat|default:"—" }}
+                        </div>
+                    </div>
+
+                    <div class="mobile-member-actions">
+                        <a
+                            class="btn btn-outline-primary"
+                            href="{% url 'membership:member_update' member.pk %}"
+                        >
+                            Edit Member
+                        </a>
+
+                        {% if member.is_active %}
+                            <form
+                                method="post"
+                                action="{% url 'membership:member_deactivate' member.pk %}"
+                                onsubmit="return confirm('Deactivate this member?');"
+                            >
+                                {% csrf_token %}
+
+                                <button
+                                    class="btn btn-outline-danger"
+                                    type="submit"
+                                >
+                                    Deactivate
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </article>
+            {% empty %}
+                <div class="text-center py-5 text-muted">
+                    No membership records found.
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

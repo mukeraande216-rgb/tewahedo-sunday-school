@@ -1,0 +1,286 @@
+:root {
+    --membership-red: #7d1525;
+    --membership-red-dark: #50101a;
+    --membership-gold: #d7a82f;
+    --membership-cream: #fbf7ed;
+    --membership-surface: #ffffff;
+    --membership-border: #e4e7ec;
+    --membership-text: #20252b;
+    --membership-muted: #667085;
+    --membership-success: #157347;
+    --membership-shadow: 0 18px 45px rgba(31, 35, 41, 0.10);
+}
+
+.membership-shell {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.membership-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 2.25rem 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    background:
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(215, 168, 47, .28),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            var(--membership-red-dark),
+            var(--membership-red)
+        );
+    border-radius: 1.25rem;
+    box-shadow: var(--membership-shadow);
+}
+
+.membership-eyebrow {
+    display: block;
+    margin-bottom: .5rem;
+    color: #f4dc8a;
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.membership-hero h1 {
+    margin: 0 0 .5rem;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 800;
+    line-height: 1.05;
+}
+
+.membership-hero p {
+    max-width: 680px;
+    margin: 0;
+    color: rgba(255, 255, 255, .84);
+    font-size: 1rem;
+}
+
+.membership-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: .75rem;
+    flex-shrink: 0;
+}
+
+.membership-actions .btn {
+    min-height: 46px;
+    padding: .7rem 1.15rem;
+    border-radius: .65rem;
+    font-weight: 700;
+}
+
+.btn-membership-primary {
+    color: #ffffff;
+    background: var(--membership-red);
+    border: 1px solid var(--membership-red);
+}
+
+.btn-membership-primary:hover,
+.btn-membership-primary:focus {
+    color: #ffffff;
+    background: var(--membership-red-dark);
+    border-color: var(--membership-red-dark);
+}
+
+.btn-membership-gold {
+    color: #2c2008;
+    background: var(--membership-gold);
+    border: 1px solid var(--membership-gold);
+}
+
+.btn-membership-gold:hover,
+.btn-membership-gold:focus {
+    color: #ffffff;
+    background: var(--membership-red);
+    border-color: var(--membership-red);
+}
+
+.btn-membership-light {
+    color: var(--membership-red);
+    background: #ffffff;
+    border: 1px solid rgba(255, 255, 255, .8);
+}
+
+.btn-membership-light:hover,
+.btn-membership-light:focus {
+    color: var(--membership-red-dark);
+    background: var(--membership-cream);
+}
+
+.membership-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.membership-stat-card {
+    padding: 1.35rem 1.5rem;
+    background: var(--membership-surface);
+    border: 1px solid var(--membership-border);
+    border-radius: 1rem;
+    box-shadow: 0 10px 28px rgba(31, 35, 41, .06);
+}
+
+.membership-stat-label {
+    display: block;
+    margin-bottom: .25rem;
+    color: var(--membership-muted);
+    font-size: .82rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.membership-stat-value {
+    color: var(--membership-text);
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.membership-panel {
+    overflow: hidden;
+    background: var(--membership-surface);
+    border: 1px solid var(--membership-border);
+    border-radius: 1.1rem;
+    box-shadow: var(--membership-shadow);
+}
+
+.membership-toolbar {
+    padding: 1.25rem;
+    background: #ffffff;
+    border-bottom: 1px solid var(--membership-border);
+}
+
+.membership-search-form {
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) auto auto;
+    gap: .75rem;
+    align-items: center;
+}
+
+.membership-search-form .form-control {
+    min-height: 48px;
+    padding: .75rem 1rem;
+    border-color: #d0d5dd;
+    border-radius: .65rem;
+}
+
+.membership-search-form .form-control:focus {
+    border-color: var(--membership-red);
+    box-shadow: 0 0 0 .25rem rgba(125, 21, 37, .12);
+}
+
+.membership-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem;
+    background: var(--membership-cream);
+    border-bottom: 1px solid var(--membership-border);
+}
+
+.membership-panel-header h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.membership-count {
+    padding: .35rem .7rem;
+    color: var(--membership-red-dark);
+    background: #ffffff;
+    border: 1px solid #eadfca;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 800;
+}
+
+.membership-table-wrapper {
+    overflow-x: auto;
+}
+
+.membership-table {
+    min-width: 980px;
+    margin: 0;
+}
+
+.membership-table thead th {
+    padding: .9rem 1rem;
+    color: #475467;
+    background: #f9fafb;
+    border-bottom: 1px solid var(--membership-border);
+    font-size: .76rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.membership-table tbody td {
+    padding: 1rem;
+    color: var(--membership-text);
+    border-color: #eef0f3;
+    vertical-align: middle;
+}
+
+.membership-table tbody tr:hover {
+    background: #fcfaf5;
+}
+
+.member-id {
+    color: var(--membership-red);
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.member-name {
+    font-weight: 750;
+}
+
+.member-status {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .35rem .65rem;
+    border-radius: 999px;
+    font-size: .76rem;
+    font-weight: 800;
+}
+
+.member-status-active {
+    color: #0f5132;
+    background: #d1e7dd;
+}
+
+.member-status-inactive {
+    color: #565e64;
+    background: #e9ecef;
+}
+
+.member-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: .45rem;
+    white-space: nowrap;
+}
+
+.member-actions .btn {
+    border-radius: .5rem;
+    font-weight: 700;
+}
+
+.membership-empty {
+    padding: 4

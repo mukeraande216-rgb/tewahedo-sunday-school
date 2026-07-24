@@ -1,0 +1,589 @@
+{% extends "website/base.html" %}
+
+{% block title %}Become a Member | St. Urael Church{% endblock %}
+
+{% block content %}
+<style>
+    .membership-application-page {
+        padding: 3rem 1rem 5rem;
+        background:
+            linear-gradient(
+                rgba(255, 255, 255, 0.95),
+                rgba(255, 255, 255, 0.98)
+            ),
+            #f8f5ef;
+    }
+
+    .membership-application-container {
+        width: 100%;
+        max-width: 1180px;
+        margin: 0 auto;
+    }
+
+    .application-heading {
+        margin-bottom: 2rem;
+        padding: 2.5rem;
+        color: #ffffff;
+        background:
+            radial-gradient(
+                circle at 90% 15%,
+                rgba(218, 174, 66, 0.3),
+                transparent 35%
+            ),
+            linear-gradient(135deg, #53101a, #8b1d2c);
+        border-radius: 18px;
+        box-shadow: 0 20px 45px rgba(58, 16, 24, 0.18);
+    }
+
+    .application-heading-label {
+        margin-bottom: 0.7rem;
+        color: #f1cc73;
+        font-size: 0.82rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    .application-heading h1 {
+        margin-bottom: 0.8rem;
+        font-size: clamp(2rem, 4vw, 3.3rem);
+        font-weight: 800;
+    }
+
+    .application-heading p {
+        max-width: 780px;
+        margin-bottom: 0;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 1.05rem;
+        line-height: 1.7;
+    }
+
+    .application-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 2.2fr) minmax(280px, 0.8fr);
+        gap: 1.5rem;
+        align-items: start;
+    }
+
+    .application-card,
+    .application-information {
+        background: #ffffff;
+        border: 1px solid #e5ddd2;
+        border-radius: 18px;
+        box-shadow: 0 14px 35px rgba(33, 24, 20, 0.08);
+    }
+
+    .application-card {
+        padding: 2rem;
+    }
+
+    .application-information {
+        position: sticky;
+        top: 1.5rem;
+        padding: 1.6rem;
+    }
+
+    .application-section {
+        margin-bottom: 2rem;
+        padding-bottom: 1.75rem;
+        border-bottom: 1px solid #ece7df;
+    }
+
+    .application-section:last-of-type {
+        margin-bottom: 1.25rem;
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+
+    .application-section h2 {
+        margin-bottom: 0.3rem;
+        color: #54111b;
+        font-size: 1.25rem;
+        font-weight: 800;
+    }
+
+    .application-section-description {
+        margin-bottom: 1.25rem;
+        color: #6c6c6c;
+        font-size: 0.93rem;
+    }
+
+    .application-fields {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.2rem;
+    }
+
+    .application-field-full {
+        grid-column: 1 / -1;
+    }
+
+    .application-label {
+        display: block;
+        margin-bottom: 0.45rem;
+        color: #302b2b;
+        font-weight: 700;
+    }
+
+    .required-mark {
+        color: #a51f32;
+    }
+
+    .application-card .form-control,
+    .application-card .form-select {
+        min-height: 50px;
+        padding: 0.75rem 0.9rem;
+        border: 1px solid #cfc8bf;
+        border-radius: 9px;
+        box-shadow: none;
+    }
+
+    .application-card textarea.form-control {
+        min-height: 110px;
+        resize: vertical;
+    }
+
+    .application-card .form-control:focus,
+    .application-card .form-select:focus {
+        border-color: #8b1d2c;
+        box-shadow: 0 0 0 0.2rem rgba(139, 29, 44, 0.12);
+    }
+
+    .application-error {
+        margin-top: 0.35rem;
+        color: #b42318;
+        font-size: 0.87rem;
+        font-weight: 600;
+    }
+
+    .application-consent {
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-start;
+        padding: 1rem;
+        background: #fbf8f2;
+        border: 1px solid #e9dfcf;
+        border-radius: 10px;
+    }
+
+    .application-consent .form-check-input {
+        width: 1.2rem;
+        height: 1.2rem;
+        margin-top: 0.2rem;
+        flex-shrink: 0;
+    }
+
+    .application-consent label {
+        color: #4e4945;
+        line-height: 1.55;
+    }
+
+    .application-submit-row {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1.5rem;
+    }
+
+    .application-submit-button {
+        min-width: 220px;
+        min-height: 52px;
+        padding: 0.75rem 1.5rem;
+        color: #ffffff;
+        background: #8b1d2c;
+        border: 1px solid #8b1d2c;
+        border-radius: 9px;
+        font-weight: 800;
+    }
+
+    .application-submit-button:hover {
+        color: #ffffff;
+        background: #681420;
+        border-color: #681420;
+    }
+
+    .application-information h2 {
+        margin-bottom: 1rem;
+        color: #54111b;
+        font-size: 1.25rem;
+        font-weight: 800;
+    }
+
+    .application-information-item {
+        margin-bottom: 1.2rem;
+        padding-bottom: 1.2rem;
+        border-bottom: 1px solid #ece7df;
+    }
+
+    .application-information-item:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+
+    .application-information-item strong {
+        display: block;
+        margin-bottom: 0.35rem;
+        color: #302b2b;
+    }
+
+    .application-information-item p {
+        margin-bottom: 0;
+        color: #6a6663;
+        font-size: 0.92rem;
+        line-height: 1.55;
+    }
+
+    .application-alert {
+        margin-bottom: 1.5rem;
+        padding: 1rem 1.2rem;
+        color: #842029;
+        background: #f8d7da;
+        border: 1px solid #f5c2c7;
+        border-radius: 10px;
+    }
+
+    @media (max-width: 991.98px) {
+        .application-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .application-information {
+            position: static;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .membership-application-page {
+            padding: 1.5rem 0.75rem 3rem;
+        }
+
+        .application-heading {
+            padding: 1.6rem;
+        }
+
+        .application-card {
+            padding: 1.25rem;
+        }
+
+        .application-fields {
+            grid-template-columns: 1fr;
+        }
+
+        .application-field-full {
+            grid-column: auto;
+        }
+
+        .application-submit-row {
+            display: block;
+        }
+
+        .application-submit-button {
+            width: 100%;
+        }
+    }
+</style>
+
+<section class="membership-application-page">
+    <div class="membership-application-container">
+
+        <header class="application-heading">
+            <div class="application-heading-label">
+                St. Urael Church Membership
+            </div>
+
+            <h1>Become a Member</h1>
+
+            <p>
+                Complete the application below to begin the church membership
+                process. An authorized church representative will review your
+                information and contact you regarding the next steps.
+            </p>
+        </header>
+
+        {% if form.non_field_errors %}
+            <div class="application-alert">
+                {% for error in form.non_field_errors %}
+                    <div>{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="application-layout">
+            <form method="post" class="application-card" novalidate>
+                {% csrf_token %}
+
+                <section class="application-section">
+                    <h2>Personal Information</h2>
+
+                    <p class="application-section-description">
+                        Provide your primary personal and church information.
+                    </p>
+
+                    <div class="application-fields">
+                        <div>
+                            <label
+                                for="{{ form.full_name.id_for_label }}"
+                                class="application-label"
+                            >
+                                Full Name
+                                <span class="required-mark">*</span>
+                            </label>
+
+                            {{ form.full_name }}
+
+                            {% for error in form.full_name.errors %}
+                                <div class="application-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div>
+                            <label
+                                for="{{ form.baptism_name.id_for_label }}"
+                                class="application-label"
+                            >
+                                Baptism Name
+                            </label>
+
+                            {{ form.baptism_name }}
+
+                            {% for error in form.baptism_name.errors %}
+                                <div class="application-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div>
+                            <label
+                                for="{{ form.yenesha_abat.id_for_label }}"
+                                class="application-label"
+                            >
+                                Yenesha Abat
+                            </label>
+
+                            {{ form.yenesha_abat }}
+
+                            {% for error in form.yenesha_abat.errors %}
+                                <div class="application-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div>
+                            <label
+                                for="{{ form.date_of_birth.id_for_label }}"
+                                class="application-label"
+                            >
+                                Date of Birth
+                            </label>
+
+                            {{ form.date_of_birth }}
+
+                            {% for error in form.date_of_birth.errors %}
+                                <div class="application-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+
+                <section class="application-section">
+                    <h2>Contact Information</h2>
+
+                    <p class="application-section-description">
+                        This information will be used only for church
+                        membership communication.
+                    </p>
+
+                    <div class="application-fields">
+                        <div>
+                            <label
+                                for="{{ form.phone_number.id_for_label }}"
+                                class="application-label"
+                            >
+                                Phone Number
+                                <span class="required-mark">*</span>
+                            </label>
+
+                            {{ form.phone_number }}
+
+                            {% for error in form.phone_number.errors %}
+                                <div class="application-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div>
+                            <label
+                                for="{{ form.email.id_for_label }}"
+                                class="application-label"
+                            >
+                                Email Address
+                                <span class="required-mark">*</span>
+                            </label>
+
+                            {{ form.email }}
+
+                            {% for error in form.email.errors %}
+                                <div class="application-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="application-field-full">
+                            <label
+                                for="{{ form.address.id_for_label }}"
+                                class="application-label"
+                            >
+                                Home Address
+                                <span class="required-mark">*</span>
+                            </label>
+
+                            {{ form.address }}
+
+                            {% for error in form.address.errors %}
+                                <div class="application-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="application-field-full">
+                            <label
+                                for="{{ form.preferred_language.id_for_label }}"
+                                class="application-label"
+                            >
+                                Preferred Language
+                            </label>
+
+                            {{ form.preferred_language }}
+
+                            {% for error in form.preferred_language.errors %}
+                                <div class="application-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+
+                <section class="application-section">
+                    <h2>Household and Additional Information</h2>
+
+                    <p class="application-section-description">
+                        Share relevant family information or questions for
+                        church leadership.
+                    </p>
+
+                    <div class="application-fields">
+                        <div class="application-field-full">
+                            <label
+                                for="{{ form.household_information.id_for_label }}"
+                                class="application-label"
+                            >
+                                Family or Household Information
+                            </label>
+
+                            {{ form.household_information }}
+
+                            {% for error in form.household_information.errors %}
+                                <div class="application-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="application-field-full">
+                            <label
+                                for="{{ form.message.id_for_label }}"
+                                class="application-label"
+                            >
+                                Additional Message
+                            </label>
+
+                            {{ form.message }}
+
+                            {% for error in form.message.errors %}
+                                <div class="application-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+
+                <div class="application-consent">
+                    {{ form.consent_confirmed }}
+
+                    <div>
+                        <label for="{{ form.consent_confirmed.id_for_label }}">
+                            {{ form.consent_confirmed.label }}
+                        </label>
+
+                        {% for error in form.consent_confirmed.errors %}
+                            <div class="application-error">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="application-submit-row">
+                    <button
+                        type="submit"
+                        class="application-submit-button"
+                    >
+                        Submit Membership Application
+                    </button>
+                </div>
+            </form>
+
+            <aside class="application-information">
+                <h2>What Happens Next?</h2>
+
+                <div class="application-information-item">
+                    <strong>1. Submit your application</strong>
+
+                    <p>
+                        Complete the form with accurate contact and household
+                        information.
+                    </p>
+                </div>
+
+                <div class="application-information-item">
+                    <strong>2. Church review</strong>
+
+                    <p>
+                        An authorized church leader will privately review your
+                        application.
+                    </p>
+                </div>
+
+                <div class="application-information-item">
+                    <strong>3. Follow-up contact</strong>
+
+                    <p>
+                        The church will contact you regarding orientation,
+                        documentation, or additional steps.
+                    </p>
+                </div>
+
+                <div class="application-information-item">
+                    <strong>4. Membership approval</strong>
+
+                    <p>
+                        After approval, your official church Member ID will be
+                        created.
+                    </p>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+{% endblock %}

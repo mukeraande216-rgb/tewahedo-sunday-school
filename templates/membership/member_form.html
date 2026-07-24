@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }} | St. Urael Church{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-xl-9">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="mb-1">{{ page_title }}</h1>
+
+                {% if member %}
+                    <p class="text-muted mb-0">
+                        Member ID: <strong>{{ member.member_id }}</strong>
+                    </p>
+                {% else %}
+                    <p class="text-muted mb-0">
+                        The Member ID will be generated automatically after saving.
+                    </p>
+                {% endif %}
+            </div>
+
+            <a
+                class="btn btn-outline-secondary"
+                href="{% url 'membership:member_list' %}"
+            >
+                Back to Members
+            </a>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label
+                                class="form-label fw-semibold"
+                                for="{{ form.full_name.id_for_label }}"
+                            >
+                                Full Name
+                            </label>
+
+                            {{ form.full_name }}
+
+                            {% for error in form.full_name.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label
+                                class="form-label fw-semibold"
+                                for="{{ form.baptism_name.id_for_label }}"
+                            >
+                                Baptism Name
+                            </label>
+
+                            {{ form.baptism_name }}
+
+                            {% for error in form.baptism_name.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label
+                                class="form-label fw-semibold"
+                                for="{{ form.yenesha_abat.id_for_label }}"
+                            >
+                                Yenesha Abat
+                            </label>
+
+                            {{ form.yenesha_abat }}
+
+                            {% for error in form.yenesha_abat.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label
+                                class="form-label fw-semibold"
+                                for="{{ form.membership_date.id_for_label }}"
+                            >
+                                Membership Date
+                            </label>
+
+                            {{ form.membership_date }}
+
+                            {% for error in form.membership_date.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label
+                                class="form-label fw-semibold"
+                                for="{{ form.phone_number.id_for_label }}"
+                            >
+                                Phone Number
+                            </label>
+
+                            {{ form.phone_number }}
+
+                            {% for error in form.phone_number.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-12">
+                            <label
+                                class="form-label fw-semibold"
+                                for="{{ form.address.id_for_label }}"
+                            >
+                                Address
+                            </label>
+
+                            {{ form.address }}
+
+                            {% for error in form.address.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-12">
+                            <label
+                                class="form-label fw-semibold"
+                                for="{{ form.notes.id_for_label }}"
+                            >
+                                Notes
+                            </label>
+
+                            {{ form.notes }}
+
+                            {% for error in form.notes.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-check">
+                                {{ form.is_active }}
+
+                                <label
+                                    class="form-check-label fw-semibold"
+                                    for="{{ form.is_active.id_for_label }}"
+                                >
+                                    Active Member
+                                </label>
+                            </div>
+
+                            {% for error in form.is_active.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a
+                            class="btn btn-outline-secondary"
+                            href="{% url 'membership:member_list' %}"
+                        >
+                            Cancel
+                        </a>
+
+                        <button class="btn btn-danger" type="submit">
+                            {% if member %}
+                                Save Changes
+                            {% else %}
+                                Add Member
+                            {% endif %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

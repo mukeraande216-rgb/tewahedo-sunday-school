@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Import Members | St. Urael Church{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-7">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="mb-1">Import Members</h1>
+                <p class="text-muted mb-0">
+                    Upload an Excel membership spreadsheet.
+                </p>
+            </div>
+
+            <a
+                class="btn btn-outline-secondary"
+                href="{% url 'membership:member_list' %}"
+            >
+                Back to Members
+            </a>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <div class="alert alert-info">
+                    <strong>Accepted file:</strong> Excel .xlsx, maximum 5 MB.
+                </div>
+
+                <h2 class="h5">Supported columns</h2>
+
+                <ul>
+                    <li>Member ID</li>
+                    <li>Full Name — required</li>
+                    <li>Baptism Name</li>
+                    <li>Address</li>
+                    <li>Yenesha Abat</li>
+                    <li>Date or Membership Date</li>
+                    <li>Phone Number</li>
+                    <li>Active Member</li>
+                    <li>Notes</li>
+                </ul>
+
+                <p class="text-muted">
+                    New members receive an automatic KU Member ID. Existing
+                    members are updated when the spreadsheet contains a matching
+                    Member ID, or a matching full name and phone number.
+                </p>
+
+                <form method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <div class="mb-4">
+                        <label
+                            class="form-label fw-semibold"
+                            for="{{ form.excel_file.id_for_label }}"
+                        >
+                            Excel membership file
+                        </label>
+
+                        {{ form.excel_file }}
+
+                        {% if form.excel_file.help_text %}
+                            <div class="form-text">
+                                {{ form.excel_file.help_text }}
+                            </div>
+                        {% endif %}
+
+                        {% for error in form.excel_file.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a
+                            class="btn btn-outline-secondary"
+                            href="{% url 'membership:member_list' %}"
+                        >
+                            Cancel
+                        </a>
+
+                        <button class="btn btn-danger" type="submit">
+                            Import Members
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

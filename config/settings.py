@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     
     'website',
-    
+    'membership',
     'accounts',
     'students',
     'classes',
