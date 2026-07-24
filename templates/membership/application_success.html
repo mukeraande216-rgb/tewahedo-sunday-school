@@ -1,0 +1,302 @@
+{% extends "website/base.html" %}
+
+{% block title %}Application Received | St. Urael Church{% endblock %}
+
+{% block content %}
+<style>
+    .membership-success-page {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        padding: 4rem 1rem;
+        background:
+            radial-gradient(
+                circle at 15% 10%,
+                rgba(196, 151, 46, 0.12),
+                transparent 30%
+            ),
+            #f8f5ef;
+    }
+
+    .membership-success-container {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .membership-success-card {
+        overflow: hidden;
+        background: #ffffff;
+        border: 1px solid #e3dbd0;
+        border-radius: 20px;
+        box-shadow: 0 22px 55px rgba(55, 31, 27, 0.12);
+    }
+
+    .membership-success-header {
+        padding: 2.75rem 2rem;
+        color: #ffffff;
+        text-align: center;
+        background:
+            radial-gradient(
+                circle at 85% 10%,
+                rgba(229, 187, 80, 0.32),
+                transparent 34%
+            ),
+            linear-gradient(135deg, #53101a, #8b1d2c);
+    }
+
+    .success-checkmark {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 76px;
+        height: 76px;
+        margin: 0 auto 1.25rem;
+        color: #54111b;
+        background: #f1cc73;
+        border-radius: 50%;
+        font-size: 2.5rem;
+        font-weight: 900;
+    }
+
+    .membership-success-header h1 {
+        margin-bottom: 0.75rem;
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 800;
+    }
+
+    .membership-success-header p {
+        max-width: 650px;
+        margin: 0 auto;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 1.05rem;
+        line-height: 1.7;
+    }
+
+    .membership-success-body {
+        padding: 2.25rem;
+    }
+
+    .application-reference {
+        margin-bottom: 2rem;
+        padding: 1.25rem;
+        text-align: center;
+        background: #fbf7ee;
+        border: 1px solid #eadfc8;
+        border-radius: 12px;
+    }
+
+    .application-reference span {
+        display: block;
+        margin-bottom: 0.35rem;
+        color: #72675c;
+        font-size: 0.8rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .application-reference strong {
+        color: #8b1d2c;
+        font-size: 1.8rem;
+        letter-spacing: 0.04em;
+    }
+
+    .next-steps-title {
+        margin-bottom: 1rem;
+        color: #54111b;
+        font-size: 1.3rem;
+        font-weight: 800;
+    }
+
+    .next-steps {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .next-step {
+        padding: 1.1rem;
+        background: #fafafa;
+        border: 1px solid #e7e2dc;
+        border-radius: 12px;
+    }
+
+    .next-step-number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        margin-bottom: 0.75rem;
+        color: #ffffff;
+        background: #8b1d2c;
+        border-radius: 50%;
+        font-weight: 800;
+    }
+
+    .next-step strong {
+        display: block;
+        margin-bottom: 0.35rem;
+        color: #332d2b;
+    }
+
+    .next-step p {
+        margin: 0;
+        color: #6c6661;
+        font-size: 0.92rem;
+        line-height: 1.55;
+    }
+
+    .success-notice {
+        margin-bottom: 2rem;
+        padding: 1rem 1.15rem;
+        color: #5c4a19;
+        background: #fff6d9;
+        border-left: 4px solid #d6a72c;
+        border-radius: 8px;
+        line-height: 1.6;
+    }
+
+    .success-actions {
+        display: flex;
+        justify-content: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .success-actions a {
+        min-width: 180px;
+        padding: 0.75rem 1.25rem;
+        border-radius: 9px;
+        font-weight: 800;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .button-primary {
+        color: #ffffff;
+        background: #8b1d2c;
+        border: 1px solid #8b1d2c;
+    }
+
+    .button-primary:hover {
+        color: #ffffff;
+        background: #681420;
+    }
+
+    .button-secondary {
+        color: #8b1d2c;
+        background: #ffffff;
+        border: 1px solid #8b1d2c;
+    }
+
+    .button-secondary:hover {
+        color: #ffffff;
+        background: #8b1d2c;
+    }
+
+    @media (max-width: 767.98px) {
+        .membership-success-page {
+            padding: 2rem 0.75rem;
+        }
+
+        .membership-success-header,
+        .membership-success-body {
+            padding: 1.5rem;
+        }
+
+        .next-steps {
+            grid-template-columns: 1fr;
+        }
+
+        .success-actions {
+            display: grid;
+        }
+
+        .success-actions a {
+            width: 100%;
+        }
+    }
+</style>
+
+<section class="membership-success-page">
+    <div class="membership-success-container">
+        <article class="membership-success-card">
+
+            <header class="membership-success-header">
+                <div class="success-checkmark">✓</div>
+
+                <h1>Application Received</h1>
+
+                <p>
+                    Thank you for submitting your St. Urael Church membership
+                    application. Your information has been received securely
+                    and is ready for review.
+                </p>
+            </header>
+
+            <div class="membership-success-body">
+                <div class="application-reference">
+                    <span>Application Reference Number</span>
+                    <strong>{{ application.application_id }}</strong>
+                </div>
+
+                <h2 class="next-steps-title">What Happens Next?</h2>
+
+                <div class="next-steps">
+                    <div class="next-step">
+                        <div class="next-step-number">1</div>
+                        <strong>Application review</strong>
+                        <p>
+                            An authorized church representative will review
+                            the submitted information.
+                        </p>
+                    </div>
+
+                    <div class="next-step">
+                        <div class="next-step-number">2</div>
+                        <strong>Follow-up contact</strong>
+                        <p>
+                            Church leadership may contact the applicant for
+                            additional information or orientation.
+                        </p>
+                    </div>
+
+                    <div class="next-step">
+                        <div class="next-step-number">3</div>
+                        <strong>Membership decision</strong>
+                        <p>
+                            After approval, an official church Member ID will
+                            be created.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="success-notice">
+                    Please save the application reference number. Submission
+                    of this form does not automatically create active church
+                    membership.
+                </div>
+
+                <div class="success-actions">
+                    <a
+                        href="{% url 'website:home' %}"
+                        class="button-primary"
+                    >
+                        Return to Church Website
+                    </a>
+
+                    <a
+                        href="{% url 'membership:membership_apply' %}"
+                        class="button-secondary"
+                    >
+                        Submit Another Application
+                    </a>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+{% endblock %}
